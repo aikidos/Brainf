@@ -1,0 +1,8 @@
+﻿.idea
+.vs
+src/Brainf/bin
+src/Brainf/obj
+tests/Brainf.Benchmarks/bin
+tests/Brainf.Benchmarks/obj
+tests/Brainf.Tests/bin
+tests/Brainf.Tests/obj
