@@ -21,7 +21,7 @@ var parser = BrainfParser.Default;
 var compiler = BrainfCompiler.Default;
 
 var program = parser.Parse(sourceCode);
-var func = compiler.Compile(program); // Action<IBrainfStream>
+var func = compiler.Compile(program);
 
 func(KnownBrainfStreams.Console);
 ```
