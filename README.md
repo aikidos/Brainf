@@ -21,10 +21,19 @@ var parser = BrainfParser.Default;
 var compiler = BrainfCompiler.Default;
 
 var program = parser.Parse(sourceCode);
-var func = compiler.Compile(program);
+var func = compiler.Compile(program); // Action<IBrainfStream>
 
 func(KnownBrainfStreams.Console);
 ```
 
 *Output:*
 > ZYXWVUTSRQPONMLKJIHGFEDCBA
+
+Performance
+---
+
+Code execution the [example](#example) above:
+
+| Method |     Mean |   Error |  StdDev | Allocated |
+|------- |---------:|--------:|--------:|----------:|
+| Brainf | 757.5 ms | 4.26 ms | 3.98 ms |  18.23 KB |
