@@ -51,5 +51,22 @@ namespace Brainf.Tests
             // Assert
             Assert.Equal(45, sum);
         }
+
+        [Fact]
+        public void Capacity()
+        {
+            // Arrange
+            var memory = new BrainfMemory(10);
+
+            // Act
+            int capacity = memory.Capacity;
+
+            for (int i = 0; i < 11; i++)
+                memory.Pointer++;
+
+            // Assert
+            Assert.Equal(10, capacity);
+            Assert.Equal(20, memory.Capacity);
+        }
     }
 }

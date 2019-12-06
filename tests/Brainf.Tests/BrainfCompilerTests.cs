@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Moq;
+﻿using Brainf.Streams;
 using Xunit;
 
 namespace Brainf.Tests
@@ -19,19 +18,16 @@ namespace Brainf.Tests
             var parser = new BrainfParser();
             var compiler = new BrainfCompiler();
 
-            var outputValues = new List<char>();
-            
-            var brainfStream = new Mock<IBrainfStream>();
-            brainfStream.Setup(stream => stream.Write(It.IsAny<int>()))
-                .Callback((int value) => outputValues.Add((char) value));
+            var memory = new BrainfMemory();
+            var stream = new StringBrainfStream();
 
             // Act
             var program = parser.Parse(sourceCode);
-            var func = compiler.Compile(program);
-            func(brainfStream.Object);
+            var func = compiler.Compile<BrainfMemory, StringBrainfStream>(program);
+            func(memory, stream);
             
             // Assert
-            Assert.Equal("ZYXWVUTSRQPONMLKJIHGFEDCBA", new string(outputValues.ToArray()));
+            Assert.Equal("ZYXWVUTSRQPONMLKJIHGFEDCBA", stream.GetString());
         }
     }
 }

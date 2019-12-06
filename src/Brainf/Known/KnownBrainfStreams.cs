@@ -1,4 +1,6 @@
-﻿namespace Brainf
+﻿using Brainf.Streams;
+
+namespace Brainf
 {
     /// <summary>
     /// Contains reusable static instances of known implementations of the <see cref="IBrainfStream"/>.
@@ -6,8 +8,18 @@
     public static class KnownBrainfStreams
     {
         /// <summary>
+        /// Implementation of the empty stream.
+        /// </summary>
+        public static EmptyBrainfStream Empty { get; } = new EmptyBrainfStream();
+
+        /// <summary>
+        /// Implementation of a write stream to a string.
+        /// </summary>
+        public static StringBrainfStream String { get; } = new StringBrainfStream();
+
+        /// <summary>
         /// <see cref="System.Console"/> methods: <see cref="System.Console.Write(int)"/>, <see cref="System.Console.Read"/>.
         /// </summary>
-        public static IBrainfStream Console { get; } = new ConsoleBrainfStream();
+        public static ConsoleBrainfStream Console { get; } = new ConsoleBrainfStream();
     }
 }

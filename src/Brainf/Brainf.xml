@@ -14,7 +14,7 @@
             Default implementation the `Brainfuck` compiler.
             </summary>
         </member>
-        <member name="M:Brainf.BrainfCompiler.Compile``1(Brainf.IBrainfProgram)">
+        <member name="M:Brainf.BrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
             <inheritdoc />
         </member>
         <member name="T:Brainf.BrainfKind">
@@ -71,11 +71,25 @@
             Implementation of the memory usage algorithm.  
             </summary>
         </member>
+        <member name="P:Brainf.BrainfMemory.Capacity">
+            <inheritdoc />
+        </member>
         <member name="P:Brainf.BrainfMemory.Pointer">
             <inheritdoc />
         </member>
         <member name="P:Brainf.BrainfMemory.CellValue">
             <inheritdoc />
+        </member>
+        <member name="M:Brainf.BrainfMemory.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new <see cref="T:Brainf.BrainfMemory"/>.
+            </summary>
+            <param name="capacityPositive">The total number of positive memory cells.</param>
+            <param name="capacityNegative">The total number of negative memory cells.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+                The <paramref name="capacityPositive"/> parameter is less than zero.
+                The <paramref name="capacityNegative"/> parameter is less than zero.
+            </exception>
         </member>
         <member name="T:Brainf.BrainfOperation">
             <summary>
@@ -137,59 +151,18 @@
         <member name="M:Brainf.BrainfProgram.GetOperations">
             <inheritdoc />
         </member>
-        <member name="T:Brainf.ConsoleBrainfStream">
-            <summary>
-            Implementation of the console stream. 
-            </summary>
-        </member>
-        <member name="M:Brainf.ConsoleBrainfStream.Write(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:Brainf.ConsoleBrainfStream.Read">
-            <inheritdoc />
-        </member>
-        <member name="T:Brainf.BrainfCompilerExtensions">
-            <summary>
-            Helper class for working with implementations of the <see cref="T:Brainf.IBrainfCompiler"/>.
-            </summary>
-        </member>
-        <member name="M:Brainf.BrainfCompilerExtensions.Compile(Brainf.IBrainfCompiler,Brainf.IBrainfProgram)">
-            <summary>
-            Compiles a program written in `Brainfuck` into a function.
-            </summary>
-            <param name="compiler">Implementation of the <see cref="T:Brainf.IBrainfCompiler"/>.</param>
-            <param name="program">`Brainfuck` program.</param>
-            <exception cref="T:System.ArgumentNullException">
-                The <paramref name="compiler"/> parameter is null.
-                The <paramref name="program"/> parameter is null.
-            </exception>
-            <seealso cref="M:Brainf.IBrainfParser.Parse(System.String)"/>
-            <seealso cref="T:Brainf.IBrainfStream"/>
-            <example>
-            <code>
-                const string sourceCode = ...;
-             
-                var parser = BrainfParser.Default;
-                var compiler = BrainfCompiler.Default;
-             
-                var program = parser.Parse(sourceCode);
-                var func = compiler.Compile(program);
-             
-                func(KnownBrainfStreams.Console);   
-            </code>
-            </example>
-        </member>
         <member name="T:Brainf.IBrainfCompiler">
             <summary>
             Interface used for implementing `Brainfuck` compiler.
             </summary>
         </member>
-        <member name="M:Brainf.IBrainfCompiler.Compile``1(Brainf.IBrainfProgram)">
+        <member name="M:Brainf.IBrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
             <summary>
             Compiles a program written in `Brainfuck` into a function.
             </summary>
             <param name="program">`Brainfuck` program.</param>
             <typeparam name="TMemory">Type of implementation of the <see cref="T:Brainf.IBrainfMemory"/>.</typeparam>
+            <typeparam name="TStream">Type of implementation of the <see cref="T:Brainf.IBrainfStream"/>.</typeparam>
             <exception cref="T:System.ArgumentNullException">
                 The <paramref name="program"/> parameter is null.
             </exception>
@@ -203,15 +176,24 @@
                 var compiler = BrainfCompiler.Default;
              
                 var program = parser.Parse(sourceCode);
-                var func = compiler.Compile&lt;BrainfMemory&gt;(program);
              
-                func(KnownBrainfStreams.Console);   
+                var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
+             
+                var memory = new BrainfMemory();
+                var stream = KnownBrainfStreams.Console;
+             
+                func(memory, stream);   
             </code>
             </example>
         </member>
         <member name="T:Brainf.IBrainfMemory">
             <summary>
             Interface used for implementing memory usage algorithm.
+            </summary>
+        </member>
+        <member name="P:Brainf.IBrainfMemory.Capacity">
+            <summary>
+            Gets the total number of memory cells.
             </summary>
         </member>
         <member name="P:Brainf.IBrainfMemory.Pointer">
@@ -322,10 +304,58 @@
             Contains reusable static instances of known implementations of the <see cref="T:Brainf.IBrainfStream"/>.
             </summary>
         </member>
+        <member name="P:Brainf.KnownBrainfStreams.Empty">
+            <summary>
+            Implementation of the empty stream.
+            </summary>
+        </member>
+        <member name="P:Brainf.KnownBrainfStreams.String">
+            <summary>
+            Implementation of a write stream to a string.
+            </summary>
+        </member>
         <member name="P:Brainf.KnownBrainfStreams.Console">
             <summary>
             <see cref="T:System.Console"/> methods: <see cref="M:System.Console.Write(System.Int32)"/>, <see cref="M:System.Console.Read"/>.
             </summary>
+        </member>
+        <member name="T:Brainf.Streams.ConsoleBrainfStream">
+            <summary>
+            Implementation of the console stream. 
+            </summary>
+        </member>
+        <member name="M:Brainf.Streams.ConsoleBrainfStream.Write(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.Streams.ConsoleBrainfStream.Read">
+            <inheritdoc />
+        </member>
+        <member name="T:Brainf.Streams.EmptyBrainfStream">
+            <summary>
+            Implementation of the empty stream.
+            </summary>
+        </member>
+        <member name="M:Brainf.Streams.EmptyBrainfStream.Write(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.Streams.EmptyBrainfStream.Read">
+            <inheritdoc />
+        </member>
+        <member name="T:Brainf.Streams.StringBrainfStream">
+            <summary>
+            Implementation of a write stream to a string. 
+            </summary>
+        </member>
+        <member name="M:Brainf.Streams.StringBrainfStream.GetString">
+            <summary>
+            Returns the resulting string.
+            </summary>
+        </member>
+        <member name="M:Brainf.Streams.StringBrainfStream.Write(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.Streams.StringBrainfStream.Read">
+            <inheritdoc />
         </member>
     </members>
 </doc>

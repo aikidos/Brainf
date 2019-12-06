@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Brainf.Streams;
 
 namespace Brainf.Benchmarks
 {
@@ -11,17 +12,30 @@ namespace Brainf.Benchmarks
 ++++++++[>++++++++++[>++++++++++[>++++++++++[>+
 +++++++++[-]<-]<-]<-]<-]<-]<-]<-]++++++++++.";
 
-        private readonly IBrainfParser _parser = new BrainfParser();
-        private readonly IBrainfCompiler _compiler = new BrainfCompiler();
-        private readonly IBrainfStream _emptyStream = new EmptyStream();
+        private BrainfMemory _memory;
+
+        [IterationSetup]
+        public void IterationSetup()
+        {
+            _memory = new BrainfMemory(64);
+        }
+
+        [IterationCleanup]
+        public void IterationCleanup()
+        {
+            _memory = null;
+        }
 
         [Benchmark]
         public IBrainfProgram Brainf()
         {
-            var program = _parser.Parse(SourceCode);
-            var func = _compiler.Compile<BrainfMemory>(program);
-            
-            func(_emptyStream);
+            var parser = BrainfParser.Default;
+            var compiler = BrainfCompiler.Default;
+
+            var program = parser.Parse(SourceCode);
+            var func = compiler.Compile<BrainfMemory, EmptyBrainfStream>(program);
+
+            func(_memory, KnownBrainfStreams.Empty);
 
             return program;
         }

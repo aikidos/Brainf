@@ -21,9 +21,12 @@ var parser = BrainfParser.Default;
 var compiler = BrainfCompiler.Default;
 
 var program = parser.Parse(sourceCode);
-var func = compiler.Compile(program);
+var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
 
-func(KnownBrainfStreams.Console);
+var memory = new BrainfMemory();
+var stream = KnownBrainfStreams.Console;
+
+func(memory, stream);
 ```
 
 *Output:*

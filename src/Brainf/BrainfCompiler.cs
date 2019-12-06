@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
 
 namespace Brainf
 {
@@ -11,57 +10,45 @@ namespace Brainf
     /// </summary>
     public sealed class BrainfCompiler : IBrainfCompiler
     {
-        private static readonly Type MemoryType = typeof(IBrainfMemory);
-        private static readonly Type StreamType = typeof(IBrainfStream);
-        private static readonly MethodInfo MemoryPointerGetter;
-        private static readonly MethodInfo MemoryPointerSetter;
-        private static readonly MethodInfo MemoryCellValueGetter;
-        private static readonly MethodInfo MemoryCellValueSetter;
-        private static readonly MethodInfo StreamWriteMethod;
-        private static readonly MethodInfo StreamReadMethod;
-
         /// <summary>
         /// Default implementation the `Brainfuck` compiler.
         /// </summary>
         public static IBrainfCompiler Default { get; } = new BrainfCompiler();
 
-        static BrainfCompiler()
-        {
-            // ReSharper disable once PossibleNullReferenceException
-            var memoryPointerAccessors = MemoryType
-                .GetProperty(nameof(IBrainfMemory.Pointer))
-                .GetAccessors();
-
-            // ReSharper disable once PossibleNullReferenceException
-            var memoryCellValueAccessors = MemoryType
-                .GetProperty(nameof(IBrainfMemory.CellValue))
-                .GetAccessors();
-
-            MemoryPointerGetter = memoryPointerAccessors[0];
-            MemoryPointerSetter = memoryPointerAccessors[1];
-            MemoryCellValueGetter = memoryCellValueAccessors[0];
-            MemoryCellValueSetter = memoryCellValueAccessors[1];
-
-            StreamWriteMethod = StreamType.GetMethod(nameof(IBrainfStream.Write), BindingFlags.Instance | BindingFlags.Public);
-            StreamReadMethod = StreamType.GetMethod(nameof(IBrainfStream.Read), BindingFlags.Instance | BindingFlags.Public);
-        }
-
         /// <inheritdoc />
-        public Action<IBrainfStream> Compile<TMemory>(IBrainfProgram program)
-            where TMemory : IBrainfMemory, new()
+        public Action<TMemory, TStream> Compile<TMemory, TStream>(IBrainfProgram program) 
+            where TMemory : IBrainfMemory 
+            where TStream : IBrainfStream
         {
             if (program == null) 
                 throw new ArgumentNullException(nameof(program));
 
-            var dynamicMethod = new DynamicMethod("brainf_program", null, new[] { StreamType });
+            var memoryType = typeof(TMemory);
+            var streamType = typeof(TStream);
+
+            // ReSharper disable once PossibleNullReferenceException
+            var memoryPointerAccessors = memoryType
+                .GetProperty(nameof(IBrainfMemory.Pointer))
+                .GetAccessors();
+
+            // ReSharper disable once PossibleNullReferenceException
+            var memoryCellValueAccessors = memoryType
+                .GetProperty(nameof(IBrainfMemory.CellValue))
+                .GetAccessors();
+
+            var memoryPointerGetter = memoryPointerAccessors[0];
+            var memoryPointerSetter = memoryPointerAccessors[1];
+            var memoryCellValueGetter = memoryCellValueAccessors[0];
+            var memoryCellValueSetter = memoryCellValueAccessors[1];
+
+            var streamWriteMethod = streamType.GetMethod(nameof(IBrainfStream.Write), BindingFlags.Instance | BindingFlags.Public);
+            var streamReadMethod = streamType.GetMethod(nameof(IBrainfStream.Read), BindingFlags.Instance | BindingFlags.Public);
+
+            var dynamicMethod = new DynamicMethod("brainf_program", null, new[] { memoryType, streamType });
             var il = dynamicMethod.GetILGenerator();
 
             var startLoopLabels = new Stack<Label>();
             var endLoopLabels = new Stack<Label>();
-
-            il.DeclareLocal(typeof(IBrainfMemory));
-            il.Emit(OpCodes.Newobj, typeof(TMemory).GetConstructor(Type.EmptyTypes));
-            il.Emit(OpCodes.Stloc_0);
 
             var operations = program.GetOperations();
 
@@ -73,58 +60,58 @@ namespace Brainf
                 switch (operation.Kind)
                 {
                     case BrainfKind.MoveR:
-                        il.Emit(OpCodes.Ldloc_0);
+                        il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Dup);
-                        il.Emit(OpCodes.Callvirt, MemoryPointerGetter);
+                        il.Emit(OpCodes.Call, memoryPointerGetter);
                         EmitInt(il, count);
                         il.Emit(OpCodes.Add);
-                        il.Emit(OpCodes.Callvirt, MemoryPointerSetter);
+                        il.Emit(OpCodes.Call, memoryPointerSetter);
                         break;
                     
                     case BrainfKind.MoveL:
-                        il.Emit(OpCodes.Ldloc_0);
+                        il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Dup);
-                        il.Emit(OpCodes.Callvirt, MemoryPointerGetter);
+                        il.Emit(OpCodes.Call, memoryPointerGetter);
                         EmitInt(il, count);
                         il.Emit(OpCodes.Sub);
-                        il.Emit(OpCodes.Callvirt, MemoryPointerSetter);
+                        il.Emit(OpCodes.Call, memoryPointerSetter);
                         break;
                     
                     case BrainfKind.Inc:
-                        il.Emit(OpCodes.Ldloc_0);
+                        il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Dup);
-                        il.Emit(OpCodes.Callvirt, MemoryCellValueGetter);
+                        il.Emit(OpCodes.Call, memoryCellValueGetter);
                         EmitInt(il, count);
                         il.Emit(OpCodes.Add);
-                        il.Emit(OpCodes.Callvirt, MemoryCellValueSetter);
+                        il.Emit(OpCodes.Call, memoryCellValueSetter);
                         break;
                     
                     case BrainfKind.Dec:
-                        il.Emit(OpCodes.Ldloc_0);
+                        il.Emit(OpCodes.Ldarg_0);
                         il.Emit(OpCodes.Dup);
-                        il.Emit(OpCodes.Callvirt, MemoryCellValueGetter);
+                        il.Emit(OpCodes.Call, memoryCellValueGetter);
                         EmitInt(il, count);
                         il.Emit(OpCodes.Sub);
-                        il.Emit(OpCodes.Callvirt, MemoryCellValueSetter);
+                        il.Emit(OpCodes.Call, memoryCellValueSetter);
                         break;
                     
                     case BrainfKind.Out:
                         for (int _ = 0; _ < count; _++)
                         {
+                            il.Emit(OpCodes.Ldarg_1);
                             il.Emit(OpCodes.Ldarg_0);
-                            il.Emit(OpCodes.Ldloc_0);
-                            il.Emit(OpCodes.Callvirt, MemoryCellValueGetter);
-                            il.Emit(OpCodes.Callvirt, StreamWriteMethod);
+                            il.Emit(OpCodes.Call, memoryCellValueGetter);
+                            il.Emit(OpCodes.Callvirt, streamWriteMethod);
                         }
                         break;
                     
                     case BrainfKind.In:
                         for (int _ = 0; _ < count; _++)
                         {
-                            il.Emit(OpCodes.Ldloc_0);
                             il.Emit(OpCodes.Ldarg_0);
-                            il.Emit(OpCodes.Callvirt, StreamReadMethod);
-                            il.Emit(OpCodes.Callvirt, MemoryCellValueSetter);
+                            il.Emit(OpCodes.Ldarg_1);
+                            il.Emit(OpCodes.Callvirt, streamReadMethod);
+                            il.Emit(OpCodes.Call, memoryCellValueSetter);
                         }
                         break;
                     
@@ -136,8 +123,8 @@ namespace Brainf
                         
                             il.MarkLabel(startLoopLabel);
                         
-                            il.Emit(OpCodes.Ldloc_0);
-                            il.Emit(OpCodes.Callvirt, MemoryCellValueGetter);
+                            il.Emit(OpCodes.Ldarg_0);
+                            il.Emit(OpCodes.Call, memoryCellValueGetter);
                             il.Emit(OpCodes.Ldc_I4_0);
                             il.Emit(OpCodes.Ceq);
 
@@ -162,10 +149,9 @@ namespace Brainf
             
             il.Emit(OpCodes.Ret);
 
-            return (Action<IBrainfStream>) dynamicMethod.CreateDelegate(typeof(Action<IBrainfStream>));
+            return (Action<TMemory, TStream>) dynamicMethod.CreateDelegate(typeof(Action<TMemory, TStream>));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void EmitInt(ILGenerator il, int value)
         {
             switch (value)

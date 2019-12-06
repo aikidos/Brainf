@@ -7,11 +7,16 @@ namespace Brainf
     /// </summary>
     public sealed class BrainfMemory : IBrainfMemory
     {
-        private int[] _positive = new int[1];
-        private int[] _negative = new int[1];
+        private const int DefaultCapacity = 4;
+
+        private int[] _positive;
+        private int[] _negative;
         private bool _isPositive;
         private int _pointer;
         private int _cellValue;
+
+        /// <inheritdoc />
+        public int Capacity => _positive.Length + _negative.Length;
 
         /// <inheritdoc />
         public int Pointer
@@ -19,9 +24,6 @@ namespace Brainf
             get => _isPositive ? _pointer : -_pointer;
             set
             {
-                if (_pointer == value)
-                    return;
-
                 int index = Math.Abs(value);
 
                 if (_pointer == index)
@@ -32,20 +34,22 @@ namespace Brainf
 
                 if (_isPositive)
                 {
-                    if (index >= _positive.Length)
+                    int length = _positive.Length;
+
+                    if (index > length - 1)
                     {
-                        while (index >= _positive.Length)
-                            Array.Resize(ref _positive, _positive.Length * 2);
+                        Array.Resize(ref _positive, length == 0 ? DefaultCapacity : length * 2);
                     }
 
                     _cellValue = _positive[index];
                 }
                 else
                 {
-                    if (index >= _negative.Length)
+                    int length = _negative.Length;
+
+                    if (index > length - 1)
                     {
-                        while (index >= _negative.Length)
-                            Array.Resize(ref _negative, _negative.Length * 2);
+                        Array.Resize(ref _negative, length == 0 ? DefaultCapacity : length * 2);
                     }
 
                     _cellValue = _negative[index];
@@ -69,6 +73,26 @@ namespace Brainf
                 else
                     _negative[_pointer] = value;
             }
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="BrainfMemory"/>.
+        /// </summary>
+        /// <param name="capacityPositive">The total number of positive memory cells.</param>
+        /// <param name="capacityNegative">The total number of negative memory cells.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     The <paramref name="capacityPositive"/> parameter is less than zero.
+        ///     The <paramref name="capacityNegative"/> parameter is less than zero.
+        /// </exception>
+        public BrainfMemory(int capacityPositive = 0, int capacityNegative = 0)
+        {
+            if (capacityPositive < 0) 
+                throw new ArgumentOutOfRangeException(nameof(capacityPositive));
+            if (capacityNegative < 0) 
+                throw new ArgumentOutOfRangeException(nameof(capacityNegative));
+
+            _positive = new int[capacityPositive];
+            _negative = new int[capacityNegative];
         }
     }
 }

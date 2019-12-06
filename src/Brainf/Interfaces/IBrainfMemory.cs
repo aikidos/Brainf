@@ -6,6 +6,11 @@
     public interface IBrainfMemory
     {
         /// <summary>
+        /// Gets the total number of memory cells.
+        /// </summary>
+        int Capacity { get; }
+
+        /// <summary>
         /// Gets or sets the current memory pointer.
         /// </summary>
         /// <seealso cref="CellValue"/>
@@ -29,7 +34,7 @@
         /// </code>
         /// </example>
         int Pointer { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the current memory cell value.
         /// </summary>

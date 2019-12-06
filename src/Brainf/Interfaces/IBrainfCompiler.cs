@@ -12,6 +12,7 @@ namespace Brainf
         /// </summary>
         /// <param name="program">`Brainfuck` program.</param>
         /// <typeparam name="TMemory">Type of implementation of the <see cref="IBrainfMemory"/>.</typeparam>
+        /// <typeparam name="TStream">Type of implementation of the <see cref="IBrainfStream"/>.</typeparam>
         /// <exception cref="ArgumentNullException">
         ///     The <paramref name="program"/> parameter is null.
         /// </exception>
@@ -25,12 +26,17 @@ namespace Brainf
         ///     var compiler = BrainfCompiler.Default;
         ///  
         ///     var program = parser.Parse(sourceCode);
-        ///     var func = compiler.Compile&lt;BrainfMemory&gt;(program);
         ///  
-        ///     func(KnownBrainfStreams.Console);   
+        ///     var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
+        ///  
+        ///     var memory = new BrainfMemory();
+        ///     var stream = KnownBrainfStreams.Console;
+        ///  
+        ///     func(memory, stream);   
         /// </code>
         /// </example>
-        Action<IBrainfStream> Compile<TMemory>(IBrainfProgram program)
-            where TMemory : IBrainfMemory, new();
+        Action<TMemory, TStream> Compile<TMemory, TStream>(IBrainfProgram program)
+            where TMemory : IBrainfMemory
+            where TStream : IBrainfStream;
     }
 }

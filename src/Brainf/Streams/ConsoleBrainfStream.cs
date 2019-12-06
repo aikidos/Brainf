@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Brainf
+namespace Brainf.Streams
 {
     /// <summary>
     /// Implementation of the console stream. 
