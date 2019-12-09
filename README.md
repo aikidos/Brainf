@@ -39,4 +39,4 @@ Code execution the [example](#example) above:
 
 | Method |     Mean |   Error |  StdDev | Allocated |
 |------- |---------:|--------:|--------:|----------:|
-| Brainf | 786.9 ms | 2.10 ms | 1.97 ms |  20.88 KB |
+| Brainf | 591.2 ms | 1.26 ms | 1.18 ms |  20.88 KB |

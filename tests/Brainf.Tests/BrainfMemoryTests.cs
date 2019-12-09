@@ -14,8 +14,8 @@ namespace Brainf.Tests
             // Act
             for (int i = 0; i < 10; i++)
             {
-                memory.Pointer = i;
                 memory.CellValue = i;
+                memory.Pointer = i;
             }
 
             for (int i = 9; i >= 0; i--)
@@ -38,8 +38,8 @@ namespace Brainf.Tests
             // Act
             for (int i = -1; i >= -10; i--)
             {
-                memory.Pointer = i;
                 memory.CellValue = -(i + 1);
+                memory.Pointer = i;
             }
 
             for (int i = -10; i <= -1 ; i++)
@@ -62,7 +62,10 @@ namespace Brainf.Tests
             int capacity = memory.Capacity;
 
             for (int i = 0; i < 11; i++)
+            {
+                memory.CellValue = i;
                 memory.Pointer++;
+            }
 
             // Assert
             Assert.Equal(10, capacity);

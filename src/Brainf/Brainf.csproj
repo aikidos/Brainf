@@ -8,13 +8,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>D:\Projects\gitlab\Brainf\src\Brainf\Brainf.xml</DocumentationFile>
+    <DocumentationFile>Brainf.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>D:\Projects\gitlab\Brainf\src\Brainf\Brainf.xml</DocumentationFile>
+    <DocumentationFile>Brainf.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

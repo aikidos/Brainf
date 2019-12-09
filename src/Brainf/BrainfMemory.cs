@@ -11,9 +11,10 @@ namespace Brainf
 
         private int[] _positive;
         private int[] _negative;
-        private bool _isPositive;
         private int _pointer;
         private int _cellValue;
+        private bool _isPositive;
+        private bool _needUpdateCell;
 
         /// <inheritdoc />
         public int Capacity => _positive.Length + _negative.Length;
@@ -24,35 +25,53 @@ namespace Brainf
             get => _isPositive ? _pointer : -_pointer;
             set
             {
+                // Note!!
+                // Small duplication of the resizing arrays logic is used as optimization.
+                // `MethodImplOptions.AggressiveInlining` also affects performance, albeit slightly.
+
                 int index = Math.Abs(value);
 
                 if (_pointer == index)
                     return;
+
+                if (_needUpdateCell)
+                {
+                    if (_isPositive)
+                    {
+                        int length;
+
+                        while (_pointer >= (length = _positive.Length))
+                            Array.Resize(ref _positive, length == 0 ? DefaultCapacity : length * 2);
+
+                        _positive[_pointer] = _cellValue;
+                    }
+                    else
+                    {
+                        int length;
+
+                        while (_pointer >= (length = _negative.Length))
+                            Array.Resize(ref _negative, length == 0 ? DefaultCapacity : length * 2);
+
+                        _negative[_pointer] = _cellValue;
+                    }
+
+                    _needUpdateCell = false;
+                }
 
                 _isPositive = value > 0;
                 _pointer = index;
 
                 if (_isPositive)
                 {
-                    int length = _positive.Length;
-
-                    if (index > length - 1)
-                    {
-                        Array.Resize(ref _positive, length == 0 ? DefaultCapacity : length * 2);
-                    }
-
-                    _cellValue = _positive[index];
+                    _cellValue = index < _positive.Length 
+                        ? _positive[_pointer] 
+                        : 0;
                 }
                 else
                 {
-                    int length = _negative.Length;
-
-                    if (index > length - 1)
-                    {
-                        Array.Resize(ref _negative, length == 0 ? DefaultCapacity : length * 2);
-                    }
-
-                    _cellValue = _negative[index];
+                    _cellValue = index < _negative.Length 
+                        ? _negative[_pointer] 
+                        : 0;
                 }
             }
         }
@@ -67,11 +86,8 @@ namespace Brainf
                     return;
 
                 _cellValue = value;
-                
-                if (_isPositive)
-                    _positive[_pointer] = value;
-                else
-                    _negative[_pointer] = value;
+
+                _needUpdateCell = true;
             }
         }
 
