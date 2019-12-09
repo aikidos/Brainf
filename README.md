@@ -40,3 +40,35 @@ Code execution the [example](#example) above:
 | Method |     Mean |   Error |  StdDev | Allocated |
 |------- |---------:|--------:|--------:|----------:|
 | Brainf | 591.2 ms | 1.26 ms | 1.18 ms |  20.88 KB |
+
+What is madness?
+---
+
+[A brainfuck interpreter](http://www.hevanet.com/cristofd/brainfuck/dbfi.b) is madness:
+
+```csharp
+const string sourceCode = @"
+>>>+[[-]>>[-]++>+>+++++++[<++++>>++<-]++>>+>+>+++++[>++>++++++<<-]+>>>,<++[[>[
+->>]<[>>]<<-]<[<]<+>>[>]>[<+>-[[<+>-]>]<[[[-]<]++<-[<+++++++++>[<->-]>>]>>]]<<
+]<]<[[<]>[[>]>>[>>]+[<<]<[<]<+>>-]>[>]+[->>]<<<<[[<<]<[<]+<<[+>+<<-[>-->+<<-[>
++<[>>+<<-]]]>[<+>-]<]++>>-->[>]>>[>>]]<<[>>+<[[<]<]>[[<<]<[<]+[-<+>>-[<<+>++>-
+[<->[<<+>>-]]]<[>+<-]>]>[>]>]>[>>]>>]<<[>>+>>+>>]<<[->>>>>>>>]<<[>.>>>>>>>]<<[
+>->>>>>]<<[>,>>>]<<[>+>]<<[+<<]<]";
+
+...
+
+Console.WriteLine(@"Input a `Brainfuck` program and its input, separated by an exclamation point:");
+
+func(memory, stream);
+```
+
+*Console:*
+```
+Input a `Brainfuck` program and its input, separated by an exclamation point:
+>++[<+++++++++++++>-]<[[>+>+<<-]>[<+>-]++++++++
+[>++++++++<-]>.[-]<<>++++++++++[>++++++++++[>++
+++++++++[>++++++++++[>++++++++++[>++++++++++[>+
++++++++++[-]<-]<-]<-]<-]<-]<-]<-]++++++++++.
+!
+ZYXWVUTSRQPONMLKJIHGFEDCBA
+```
