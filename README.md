@@ -22,8 +22,8 @@ var compiler = BrainfCompiler.Default;
 
 if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
 {
-	Console.WriteLine($"Error! {errorMessage}");
-	return;
+    Console.WriteLine($"Error! {errorMessage}");
+    return;
 }
 
 var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
