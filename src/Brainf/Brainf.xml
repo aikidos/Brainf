@@ -129,6 +129,9 @@
         <member name="M:Brainf.BrainfParser.Parse(System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Brainf.BrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
+            <inheritdoc />
+        </member>
         <member name="T:Brainf.BrainfProgram">
             <summary>
             `Brainfuck` program.
@@ -150,6 +153,17 @@
         </member>
         <member name="M:Brainf.BrainfProgram.GetOperations">
             <inheritdoc />
+        </member>
+        <member name="T:Brainf.Exceptions.BrainfParseException">
+            <summary>
+            The exception that is thrown when a syntax error is found in an programs source code.
+            </summary>
+        </member>
+        <member name="M:Brainf.Exceptions.BrainfParseException.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:Brainf.Exceptions.BrainfParseException"/>.
+            </summary>
+            <param name="message">Syntax error message.</param>
         </member>
         <member name="T:Brainf.IBrainfCompiler">
             <summary>
@@ -240,6 +254,10 @@
             <exception cref="T:System.ArgumentNullException">
                 The <paramref name="sourceCode"/> parameter is null.
             </exception>
+            <exception cref="T:Brainf.Exceptions.BrainfParseException">
+                The <paramref name="sourceCode"/> parameter contains syntax errors.
+            </exception>
+            <seealso cref="M:Brainf.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)"/>
             <example>
             <code>
                 const string sourceCode = ...;
@@ -247,6 +265,31 @@
                 var parser = BrainfParser.Default;
              
                 var program = parser.Parse(sourceCode);
+            </code>
+            </example>
+        </member>
+        <member name="M:Brainf.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
+            <summary>
+            Returns `Brainfuck` program from source code.
+            A return value indicates whether the parsing operation succeeded.
+            </summary>
+            <param name="sourceCode">Source code.</param>
+            <param name="program">`Brainfuck` program.</param>
+            <param name="errorMessage">Error message.</param>
+            <exception cref="T:System.ArgumentNullException">
+                The <paramref name="sourceCode"/> parameter is null.
+            </exception>
+            <example>
+            <code>
+                const string sourceCode = ...;
+             
+                var parser = BrainfParser.Default;
+             
+                if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
+                {
+                    Console.WriteLine($"Error! {errorMessage}");
+                    return;
+                }
             </code>
             </example>
         </member>

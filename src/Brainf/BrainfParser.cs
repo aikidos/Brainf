@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Brainf.Exceptions;
 
 namespace Brainf
 {
@@ -18,31 +20,85 @@ namespace Brainf
         {
             if (sourceCode == null) 
                 throw new ArgumentNullException(nameof(sourceCode));
-            
+
+            if (!TryParse(sourceCode, out IBrainfProgram? program, out string? errorMessage))
+            {
+                throw new BrainfParseException(errorMessage);
+            }
+
+            return program;
+        }
+
+        /// <inheritdoc />
+        public bool TryParse(string sourceCode, 
+            [NotNullWhen(true)] out IBrainfProgram? program, 
+            [NotNullWhen(false)] out string? errorMessage)
+        {
+            if (sourceCode == null)
+                throw new ArgumentNullException(nameof(sourceCode));
+
             if (string.IsNullOrWhiteSpace(sourceCode))
-                return new BrainfProgram(sourceCode, Array.Empty<BrainfOperation>());
+            {
+                program = new BrainfProgram(sourceCode, Array.Empty<BrainfOperation>());
+                errorMessage = null;
+                return true;
+            }
 
             var operations = new List<BrainfOperation>();
             BrainfKind? lastKind = null;
-            
+
             int count = 1;
 
             var span = sourceCode.AsSpan();
 
+            int openedLoops = 0;
+
             for (int i = 0; i < span.Length; i++)
             {
-                var kind = span[i] switch
+                BrainfKind? kind = null;
+
+                switch (span[i])
                 {
-                    '>' => BrainfKind.MoveR,
-                    '<' => BrainfKind.MoveL,
-                    '+' => BrainfKind.Inc,
-                    '-' => BrainfKind.Dec,
-                    '.' => BrainfKind.Out,
-                    ',' => BrainfKind.In,
-                    '[' => BrainfKind.LoopStart,
-                    ']' => BrainfKind.LoopEnd,
-                    _ => default(BrainfKind?)
-                };
+                    case '>':
+                        kind = BrainfKind.MoveR;
+                        break;
+
+                    case '<':
+                        kind = BrainfKind.MoveL;
+                        break;
+
+                    case '+':
+                        kind = BrainfKind.Inc;
+                        break;
+
+                    case '-':
+                        kind = BrainfKind.Dec;
+                        break;
+
+                    case '.':
+                        kind = BrainfKind.Out;
+                        break;
+
+                    case ',':
+                        kind = BrainfKind.In;
+                        break;
+
+                    case '[':
+                        openedLoops++;
+                        kind = BrainfKind.LoopStart;
+                        break;
+
+                    case ']':
+                        if (--openedLoops < 0)
+                        {
+                            program = null;
+                            errorMessage = "Invalid `]`. There was no opening token - `[`.";
+                            return false;
+                        }
+
+                        kind = BrainfKind.LoopEnd;
+                        break;
+                }
 
                 if (kind == null)
                     continue;
@@ -55,7 +111,7 @@ namespace Brainf
                     }
 
                     lastKind = kind;
-                    
+
                     count = 1;
                 }
                 else
@@ -69,7 +125,16 @@ namespace Brainf
                 operations.Add(new BrainfOperation(lastKind.Value, count));
             }
 
-            return new BrainfProgram(sourceCode, operations.ToArray());
+            if (openedLoops > 0)
+            {
+                program = null;
+                errorMessage = "Invalid `[`. There was no closing token - `]`.";
+                return false;
+            }
+
+            program = new BrainfProgram(sourceCode, operations.ToArray());
+            errorMessage = null;
+            return true;
         }
     }
 }

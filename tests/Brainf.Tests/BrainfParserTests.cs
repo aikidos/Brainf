@@ -44,5 +44,32 @@ namespace Brainf.Tests
             Assert.Equal(BrainfKind.LoopEnd, operations[7].Kind);
             Assert.Equal(2, operations[7].Count);
         }
+
+        [Theory]
+        [InlineData("[]", true)]
+        [InlineData("[", false)]
+        [InlineData("]", false)]
+        public void TryParse(string sourceCode, bool isValid)
+        {
+            // Arrange
+            var parser = new BrainfParser();
+
+            // Act
+            bool result = parser.TryParse(sourceCode, out var program, out var errorMessage);
+
+            // Assert
+            Assert.Equal(isValid, result);
+
+            if (isValid)
+            {
+                Assert.NotNull(program);
+                Assert.Null(errorMessage);
+            }
+            else
+            {
+                Assert.Null(program);
+                Assert.NotNull(errorMessage);
+            }
+        }
     }
 }

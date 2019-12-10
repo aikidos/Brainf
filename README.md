@@ -20,7 +20,12 @@ const string sourceCode = @"
 var parser = BrainfParser.Default;
 var compiler = BrainfCompiler.Default;
 
-var program = parser.Parse(sourceCode);
+if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
+{
+	Console.WriteLine($"Error! {errorMessage}");
+	return;
+}
+
 var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
 
 var memory = new BrainfMemory();
