@@ -26,6 +26,7 @@ if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
     return;
 }
 
+// Compilation `Brainfuck` program into the `Action<BrainfMemory, ConsoleBrainfStream>`
 var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
 
 var memory = new BrainfMemory();
