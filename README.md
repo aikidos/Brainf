@@ -20,18 +20,20 @@ const string sourceCode = @"
 var parser = BrainfParser.Default;
 var compiler = BrainfCompiler.Default;
 
+// Parsing source code.
 if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
 {
     Console.WriteLine($"Error! {errorMessage}");
     return;
 }
 
-// Compilation `Brainfuck` program into the `Action<BrainfMemory, ConsoleBrainfStream>`
+// Compilation `Brainfuck` program into the function `Action<BrainfMemory, ConsoleBrainfStream>`.
 var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
 
 var memory = new BrainfMemory();
 var stream = KnownBrainfStreams.Console;
 
+// Execution.
 func(memory, stream);
 ```
 
