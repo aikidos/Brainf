@@ -26,6 +26,7 @@ var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
 var memory = new BrainfMemory();
 var stream = BrainfStreams.Console;
 
+// Execute.
 func(memory, stream);
 ```
 
