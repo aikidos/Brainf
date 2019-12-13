@@ -30,7 +30,7 @@ namespace Brainf
         ///     var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
         ///  
         ///     var memory = new BrainfMemory();
-        ///     var stream = KnownBrainfStreams.Console;
+        ///     var stream = BrainfStreams.Console;
         ///  
         ///     func(memory, stream);   
         /// </code>

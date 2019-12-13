@@ -48,10 +48,9 @@ namespace Brainf
             BrainfKind? lastKind = null;
 
             int count = 1;
+            int openedLoops = 0;
 
             var span = sourceCode.AsSpan();
-
-            int openedLoops = 0;
 
             for (int i = 0; i < span.Length; i++)
             {

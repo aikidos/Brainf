@@ -35,7 +35,7 @@ namespace Brainf.Benchmarks
             var program = parser.Parse(SourceCode);
             var func = compiler.Compile<BrainfMemory, EmptyBrainfStream>(program);
 
-            func(_memory, KnownBrainfStreams.Empty);
+            func(_memory, BrainfStreams.Empty);
 
             return program;
         }

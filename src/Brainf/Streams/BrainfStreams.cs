@@ -1,11 +1,9 @@
-﻿using Brainf.Streams;
-
-namespace Brainf
+﻿namespace Brainf.Streams
 {
     /// <summary>
     /// Contains reusable static instances of known implementations of the <see cref="IBrainfStream"/>.
     /// </summary>
-    public static class KnownBrainfStreams
+    public static class BrainfStreams
     {
         /// <summary>
         /// Implementation of the empty stream.
@@ -13,7 +11,7 @@ namespace Brainf
         public static EmptyBrainfStream Empty { get; } = new EmptyBrainfStream();
 
         /// <summary>
-        /// Implementation of a write stream to a string.
+        /// Implementation of write a stream to a string.
         /// </summary>
         public static StringBrainfStream String { get; } = new StringBrainfStream();
 

@@ -3,7 +3,7 @@
 Brainf
 ===
 
-Library for executing code written in the "Brainfuck" programming language.
+Library for executing code written in the [**Brainfuck**](https://en.wikipedia.org/wiki/Brainfuck) programming language.
 
 Example
 ---
@@ -20,16 +20,11 @@ const string sourceCode = @"
 var parser = BrainfParser.Default;
 var compiler = BrainfCompiler.Default;
 
-if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
-{
-    Console.WriteLine($"Error! {errorMessage}");
-    return;
-}
-
+var program = parser.Parse(sourceCode);
 var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
 
 var memory = new BrainfMemory();
-var stream = KnownBrainfStreams.Console;
+var stream = BrainfStreams.Console;
 
 func(memory, stream);
 ```
@@ -69,11 +64,11 @@ func(memory, stream);
 
 *Console:*
 ```
-Input a `Brainfuck` program and its input, separated by an exclamation point:
->++[<+++++++++++++>-]<[[>+>+<<-]>[<+>-]++++++++
-[>++++++++<-]>.[-]<<>++++++++++[>++++++++++[>++
-++++++++[>++++++++++[>++++++++++[>++++++++++[>+
-+++++++++[-]<-]<-]<-]<-]<-]<-]<-]++++++++++.
-!
-ZYXWVUTSRQPONMLKJIHGFEDCBA
+- Input a `Brainfuck` program and its input, separated by an exclamation point:
+- >++[<+++++++++++++>-]<[[>+>+<<-]>[<+>-]++++++++
+  [>++++++++<-]>.[-]<<>++++++++++[>++++++++++[>++
+  ++++++++[>++++++++++[>++++++++++[>++++++++++[>+
+  +++++++++[-]<-]<-]<-]<-]<-]<-]<-]++++++++++.
+- !
+- ZYXWVUTSRQPONMLKJIHGFEDCBA
 ```
