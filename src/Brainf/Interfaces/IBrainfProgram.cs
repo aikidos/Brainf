@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace Brainf
 {
@@ -33,6 +34,7 @@ namespace Brainf
         ///     } 
         /// </code>
         /// </example>
+        [Pure]
         ReadOnlySpan<BrainfOperation> GetOperations();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Brainf.Exceptions;
 
 namespace Brainf
@@ -29,6 +30,7 @@ namespace Brainf
         ///     var program = parser.Parse(sourceCode);
         /// </code>
         /// </example>
+        [Pure]
         IBrainfProgram Parse(string sourceCode);
 
         /// <summary>
@@ -54,6 +56,7 @@ namespace Brainf
         ///     }
         /// </code>
         /// </example>
+        [Pure]
         bool TryParse(string sourceCode, 
             [NotNullWhen(true)] out IBrainfProgram? program, 
             [NotNullWhen(false)] out string? errorMessage);

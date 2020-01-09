@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace Brainf
 {
@@ -35,6 +36,7 @@ namespace Brainf
         ///     func(memory, stream);   
         /// </code>
         /// </example>
+        [Pure]
         Action<TMemory, TStream> Compile<TMemory, TStream>(IBrainfProgram program)
             where TMemory : IBrainfMemory
             where TStream : IBrainfStream;
