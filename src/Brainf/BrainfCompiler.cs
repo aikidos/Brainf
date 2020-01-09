@@ -52,10 +52,10 @@ namespace Brainf
 
             var operations = program.GetOperations();
 
-            for (int i = 0; i < operations.Length; i++)
+            for (var i = 0; i < operations.Length; i++)
             {
                 var operation = operations[i];
-                int count = operation.Count;
+                var count = operation.Count;
                 
                 switch (operation.Kind)
                 {
@@ -96,7 +96,7 @@ namespace Brainf
                         break;
                     
                     case BrainfKind.Out:
-                        for (int _ = 0; _ < count; _++)
+                        for (var _ = 0; _ < count; _++)
                         {
                             il.Emit(OpCodes.Ldarg_1);
                             il.Emit(OpCodes.Ldarg_0);
@@ -106,7 +106,7 @@ namespace Brainf
                         break;
                     
                     case BrainfKind.In:
-                        for (int _ = 0; _ < count; _++)
+                        for (var _ = 0; _ < count; _++)
                         {
                             il.Emit(OpCodes.Ldarg_0);
                             il.Emit(OpCodes.Ldarg_1);
@@ -116,7 +116,7 @@ namespace Brainf
                         break;
                     
                     case BrainfKind.LoopStart:
-                        for (int _ = 0; _ < count; _++)
+                        for (var _ = 0; _ < count; _++)
                         {
                             var startLoopLabel = il.DefineLabel();
                             startLoopLabels.Push(startLoopLabel);
@@ -135,7 +135,7 @@ namespace Brainf
                         break;
                     
                     case BrainfKind.LoopEnd:
-                        for (int _ = 0; _ < count; _++)
+                        for (var _ = 0; _ < count; _++)
                         {
                             il.Emit(OpCodes.Br, startLoopLabels.Pop());
                             il.MarkLabel(endLoopLabels.Pop());

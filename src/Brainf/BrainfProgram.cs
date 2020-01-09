@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Brainf
 {
@@ -21,10 +23,10 @@ namespace Brainf
         ///     The <paramref name="sourceCode"/> parameter is null.
         ///     The <paramref name="operations"/> parameter is null.
         /// </exception>
-        internal BrainfProgram(string sourceCode, BrainfOperation[] operations)
+        internal BrainfProgram(string sourceCode, IEnumerable<BrainfOperation> operations)
         {
             SourceCode = sourceCode ?? throw new ArgumentNullException(nameof(sourceCode));
-            _operations = operations ?? throw new ArgumentNullException(nameof(operations));
+            _operations = operations?.ToArray() ?? throw new ArgumentNullException(nameof(operations));
         }
 
         /// <inheritdoc />

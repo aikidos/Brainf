@@ -3,7 +3,7 @@
 namespace Brainf.Streams
 {
     /// <summary>
-    /// Implementation of a write stream to a string. 
+    /// Implementation of write a stream to a string.
     /// </summary>
     public sealed class StringBrainfStream : IBrainfStream
     {

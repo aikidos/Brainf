@@ -55,7 +55,7 @@ namespace Brainf.Tests
             var parser = new BrainfParser();
 
             // Act
-            bool result = parser.TryParse(sourceCode, out var program, out var errorMessage);
+            var result = parser.TryParse(sourceCode, out var program, out var errorMessage);
 
             // Assert
             Assert.Equal(isValid, result);

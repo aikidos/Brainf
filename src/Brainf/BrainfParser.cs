@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Brainf.Exceptions;
 
 namespace Brainf
@@ -21,7 +22,7 @@ namespace Brainf
             if (sourceCode == null) 
                 throw new ArgumentNullException(nameof(sourceCode));
 
-            if (!TryParse(sourceCode, out IBrainfProgram? program, out string? errorMessage))
+            if (!TryParse(sourceCode, out var program, out var errorMessage))
             {
                 throw new BrainfParseException(errorMessage);
             }
@@ -39,7 +40,7 @@ namespace Brainf
 
             if (string.IsNullOrWhiteSpace(sourceCode))
             {
-                program = new BrainfProgram(sourceCode, Array.Empty<BrainfOperation>());
+                program = new BrainfProgram(sourceCode, Enumerable.Empty<BrainfOperation>());
                 errorMessage = null;
                 return true;
             }
@@ -47,12 +48,12 @@ namespace Brainf
             var operations = new List<BrainfOperation>();
             BrainfKind? lastKind = null;
 
-            int count = 1;
-            int openedLoops = 0;
+            var count = 1;
+            var openedLoops = 0;
 
             var span = sourceCode.AsSpan();
 
-            for (int i = 0; i < span.Length; i++)
+            for (var i = 0; i < span.Length; i++)
             {
                 BrainfKind? kind = null;
 
@@ -131,7 +132,7 @@ namespace Brainf
                 return false;
             }
 
-            program = new BrainfProgram(sourceCode, operations.ToArray());
+            program = new BrainfProgram(sourceCode, operations);
             errorMessage = null;
             return true;
         }

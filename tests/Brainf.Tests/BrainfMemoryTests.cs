@@ -9,16 +9,16 @@ namespace Brainf.Tests
         {
             // Arrange
             var memory = new BrainfMemory();
-            int sum = 0;
+            var sum = 0;
 
             // Act
-            for (int i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 memory.CellValue = i;
                 memory.Pointer = i;
             }
 
-            for (int i = 9; i >= 0; i--)
+            for (var i = 9; i >= 0; i--)
             {
                 memory.Pointer = i;
                 sum += memory.CellValue;
@@ -33,16 +33,16 @@ namespace Brainf.Tests
         {
             // Arrange
             var memory = new BrainfMemory();
-            int sum = 0;
+            var sum = 0;
 
             // Act
-            for (int i = -1; i >= -10; i--)
+            for (var i = -1; i >= -10; i--)
             {
                 memory.CellValue = -(i + 1);
                 memory.Pointer = i;
             }
 
-            for (int i = -10; i <= -1 ; i++)
+            for (var i = -10; i <= -1 ; i++)
             {
                 memory.Pointer = i;
                 sum += memory.CellValue;
@@ -59,9 +59,9 @@ namespace Brainf.Tests
             var memory = new BrainfMemory(10);
 
             // Act
-            int capacity = memory.Capacity;
+            var capacity = memory.Capacity;
 
-            for (int i = 0; i < 11; i++)
+            for (var i = 0; i < 11; i++)
             {
                 memory.CellValue = i;
                 memory.Pointer++;

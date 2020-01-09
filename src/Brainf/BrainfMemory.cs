@@ -29,7 +29,7 @@ namespace Brainf
                 // Small duplication of the resizing arrays logic is used as optimization.
                 // `MethodImplOptions.AggressiveInlining` also affects performance, albeit slightly.
 
-                int index = Math.Abs(value);
+                var index = Math.Abs(value);
 
                 if (_pointer == index)
                     return;

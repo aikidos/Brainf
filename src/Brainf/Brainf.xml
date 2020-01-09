@@ -140,7 +140,7 @@
         <member name="P:Brainf.BrainfProgram.SourceCode">
             <inheritdoc />
         </member>
-        <member name="M:Brainf.BrainfProgram.#ctor(System.String,Brainf.BrainfOperation[])">
+        <member name="M:Brainf.BrainfProgram.#ctor(System.String,System.Collections.Generic.IEnumerable{Brainf.BrainfOperation})">
             <summary>
             Initializes a new <see cref="T:Brainf.BrainfProgram"/>.
             </summary>
@@ -194,7 +194,7 @@
                 var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
              
                 var memory = new BrainfMemory();
-                var stream = KnownBrainfStreams.Console;
+                var stream = BrainfStreams.Console;
              
                 func(memory, stream);   
             </code>
@@ -342,22 +342,22 @@
             Reads a value.
             </summary>
         </member>
-        <member name="T:Brainf.KnownBrainfStreams">
+        <member name="T:Brainf.Streams.BrainfStreams">
             <summary>
             Contains reusable static instances of known implementations of the <see cref="T:Brainf.IBrainfStream"/>.
             </summary>
         </member>
-        <member name="P:Brainf.KnownBrainfStreams.Empty">
+        <member name="P:Brainf.Streams.BrainfStreams.Empty">
             <summary>
             Implementation of the empty stream.
             </summary>
         </member>
-        <member name="P:Brainf.KnownBrainfStreams.String">
+        <member name="P:Brainf.Streams.BrainfStreams.String">
             <summary>
-            Implementation of a write stream to a string.
+            Implementation of write a stream to a string.
             </summary>
         </member>
-        <member name="P:Brainf.KnownBrainfStreams.Console">
+        <member name="P:Brainf.Streams.BrainfStreams.Console">
             <summary>
             <see cref="T:System.Console"/> methods: <see cref="M:System.Console.Write(System.Int32)"/>, <see cref="M:System.Console.Read"/>.
             </summary>
@@ -386,7 +386,7 @@
         </member>
         <member name="T:Brainf.Streams.StringBrainfStream">
             <summary>
-            Implementation of a write stream to a string. 
+            Implementation of write a stream to a string.
             </summary>
         </member>
         <member name="M:Brainf.Streams.StringBrainfStream.GetString">
