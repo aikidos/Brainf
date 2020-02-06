@@ -72,3 +72,7 @@ func(memory, stream);
 - !
 - ZYXWVUTSRQPONMLKJIHGFEDCBA
 ```
+
+LICENSE
+===
+[MIT](LICENSE)
