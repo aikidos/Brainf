@@ -101,7 +101,9 @@ namespace Brainf
                 }
 
                 if (kind == null)
+                {
                     continue;
+                }
 
                 if (lastKind != kind)
                 {

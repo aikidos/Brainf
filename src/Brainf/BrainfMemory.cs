@@ -32,7 +32,9 @@ namespace Brainf
                 var index = Math.Abs(value);
 
                 if (_pointer == index)
+                {
                     return;
+                }
 
                 if (_needUpdateCell)
                 {
@@ -41,7 +43,9 @@ namespace Brainf
                         int length;
 
                         while (_pointer >= (length = _positive.Length))
+                        {
                             Array.Resize(ref _positive, length == 0 ? DefaultCapacity : length * 2);
+                        }
 
                         _positive[_pointer] = _cellValue;
                     }
@@ -50,7 +54,9 @@ namespace Brainf
                         int length;
 
                         while (_pointer >= (length = _negative.Length))
+                        {
                             Array.Resize(ref _negative, length == 0 ? DefaultCapacity : length * 2);
+                        }
 
                         _negative[_pointer] = _cellValue;
                     }
@@ -83,7 +89,9 @@ namespace Brainf
             set
             {
                 if (_cellValue == value)
+                {
                     return;
+                }
 
                 _cellValue = value;
 
