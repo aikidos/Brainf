@@ -1,12 +1,11 @@
 ﻿using BenchmarkDotNet.Running;
 
-namespace Brainf.Benchmarks
+namespace Brainf.Benchmarks;
+
+class Program
 {
-    class Program
+    static void Main()
     {
-        static void Main()
-        {
-            BenchmarkRunner.Run<ExecutionBenchmarks>();
-        }
+        BenchmarkRunner.Run<ExecutionBenchmarks>();
     }
 }

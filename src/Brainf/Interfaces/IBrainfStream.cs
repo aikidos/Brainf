@@ -1,19 +1,18 @@
-﻿namespace Brainf
+﻿namespace Brainf;
+
+/// <summary>
+/// Interface used for implementing stream.
+/// </summary>
+public interface IBrainfStream
 {
     /// <summary>
-    /// Interface used for implementing stream.
+    /// Writes the specified value.
     /// </summary>
-    public interface IBrainfStream
-    {
-        /// <summary>
-        /// Writes the specified value.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        void Write(int value);
+    /// <param name="value">Value.</param>
+    void Write(int value);
 
-        /// <summary>
-        /// Reads a value.
-        /// </summary>
-        int Read();
-    }
+    /// <summary>
+    /// Reads a value.
+    /// </summary>
+    int Read();
 }

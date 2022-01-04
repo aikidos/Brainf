@@ -1,43 +1,42 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Brainf.Streams;
 
-namespace Brainf.Benchmarks
+namespace Brainf.Benchmarks;
+
+[MemoryDiagnoser]
+public class ExecutionBenchmarks
 {
-    [MemoryDiagnoser]
-    public class ExecutionBenchmarks
-    {
-        private const string SourceCode = @"
+    private const string SourceCode = @"
 >++[<+++++++++++++>-]<[[>+>+<<-]>[<+>-]++++++++
 [>++++++++<-]>.[-]<<>++++++++++[>++++++++++[>++
 ++++++++[>++++++++++[>++++++++++[>++++++++++[>+
 +++++++++[-]<-]<-]<-]<-]<-]<-]<-]++++++++++.";
 
-        private BrainfMemory _memory;
+    private BrainfMemory _memory;
 
-        [IterationSetup]
-        public void IterationSetup()
-        {
-            _memory = new BrainfMemory(64);
-        }
+    [IterationSetup]
+    public void IterationSetup()
+    {
+        _memory = new BrainfMemory(64);
+    }
 
-        [IterationCleanup]
-        public void IterationCleanup()
-        {
-            _memory = null;
-        }
+    [IterationCleanup]
+    public void IterationCleanup()
+    {
+        _memory = null;
+    }
 
-        [Benchmark]
-        public IBrainfProgram Brainf()
-        {
-            var parser = BrainfParser.Default;
-            var compiler = BrainfCompiler.Default;
+    [Benchmark]
+    public IBrainfProgram Brainf()
+    {
+        var parser = BrainfParser.Default;
+        var compiler = BrainfCompiler.Default;
 
-            var program = parser.Parse(SourceCode);
-            var func = compiler.Compile<BrainfMemory, EmptyBrainfStream>(program);
+        var program = parser.Parse(SourceCode);
+        var func = compiler.Compile<BrainfMemory, EmptyBrainfStream>(program);
 
-            func(_memory, BrainfStreams.Empty);
+        func(_memory, BrainfStreams.Empty);
 
-            return program;
-        }
+        return program;
     }
 }

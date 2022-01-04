@@ -1,32 +1,31 @@
 ﻿using System.Text;
 
-namespace Brainf.Streams
+namespace Brainf.Streams;
+
+/// <summary>
+/// Implementation of write a stream to a string.
+/// </summary>
+public sealed class StringBrainfStream : IBrainfStream
 {
+    private readonly StringBuilder _builder = new StringBuilder();
+
     /// <summary>
-    /// Implementation of write a stream to a string.
+    /// Returns the resulting string.
     /// </summary>
-    public sealed class StringBrainfStream : IBrainfStream
+    public string GetString()
     {
-        private readonly StringBuilder _builder = new StringBuilder();
+        return _builder.ToString();
+    }
 
-        /// <summary>
-        /// Returns the resulting string.
-        /// </summary>
-        public string GetString()
-        {
-            return _builder.ToString();
-        }
+    /// <inheritdoc />
+    public void Write(int value)
+    {
+        _builder.Append((char) value);
+    }
 
-        /// <inheritdoc />
-        public void Write(int value)
-        {
-            _builder.Append((char) value);
-        }
-
-        /// <inheritdoc />
-        public int Read()
-        {
-            throw new System.NotImplementedException();
-        }
+    /// <inheritdoc />
+    public int Read()
+    {
+        throw new System.NotImplementedException();
     }
 }
