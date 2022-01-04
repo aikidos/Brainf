@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Brainf;
+namespace Brainf.Memory;
 
 /// <summary>
-/// Implementation of the memory usage algorithm.  
+/// Implementation of the memory usage algorithm.
 /// </summary>
 public sealed class BrainfMemory : IBrainfMemory
 {
@@ -69,14 +69,14 @@ public sealed class BrainfMemory : IBrainfMemory
 
             if (_isPositive)
             {
-                _cellValue = index < _positive.Length 
-                    ? _positive[_pointer] 
+                _cellValue = index < _positive.Length
+                    ? _positive[_pointer]
                     : 0;
             }
             else
             {
-                _cellValue = index < _negative.Length 
-                    ? _negative[_pointer] 
+                _cellValue = index < _negative.Length
+                    ? _negative[_pointer]
                     : 0;
             }
         }
@@ -110,9 +110,9 @@ public sealed class BrainfMemory : IBrainfMemory
     /// </exception>
     public BrainfMemory(int capacityPositive = 0, int capacityNegative = 0)
     {
-        if (capacityPositive < 0) 
+        if (capacityPositive < 0)
             throw new ArgumentOutOfRangeException(nameof(capacityPositive));
-        if (capacityNegative < 0) 
+        if (capacityNegative < 0)
             throw new ArgumentOutOfRangeException(nameof(capacityNegative));
 
         _positive = new int[capacityPositive];

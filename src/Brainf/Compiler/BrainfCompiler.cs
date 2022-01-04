@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using Brainf.Memory;
+using Brainf.Program;
+using Brainf.Streams;
 
-namespace Brainf;
+namespace Brainf.Compiler;
 
 /// <summary>
 /// Implementation of the `Brainfuck` compiler.
@@ -21,14 +24,12 @@ public sealed class BrainfCompiler : IBrainfCompiler
         var memoryType = typeof(TMemory);
         var streamType = typeof(TStream);
 
-        // ReSharper disable once PossibleNullReferenceException
         var memoryPointerAccessors = memoryType
-            .GetProperty(nameof(IBrainfMemory.Pointer))
+            .GetProperty(nameof(IBrainfMemory.Pointer))!
             .GetAccessors();
 
-        // ReSharper disable once PossibleNullReferenceException
         var memoryCellValueAccessors = memoryType
-            .GetProperty(nameof(IBrainfMemory.CellValue))
+            .GetProperty(nameof(IBrainfMemory.CellValue))!
             .GetAccessors();
 
         var memoryPointerGetter = memoryPointerAccessors[0];
@@ -144,7 +145,7 @@ public sealed class BrainfCompiler : IBrainfCompiler
 
         il.Emit(OpCodes.Ret);
 
-        return (Action<TMemory, TStream>) dynamicMethod.CreateDelegate(typeof(Action<TMemory, TStream>));
+        return (Action<TMemory, TStream>)dynamicMethod.CreateDelegate(typeof(Action<TMemory, TStream>));
     }
 
     private static void EmitInt(ILGenerator il, int value)
@@ -192,7 +193,7 @@ public sealed class BrainfCompiler : IBrainfCompiler
                 {
                     il.Emit(OpCodes.Ldc_I4, value);
                 }
-                else if (value < 0)
+                else
                 {
                     il.Emit(OpCodes.Ldc_I4_M1);
 

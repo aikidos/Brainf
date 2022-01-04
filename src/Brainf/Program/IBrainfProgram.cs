@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Brainf.Parser;
 
-namespace Brainf;
+namespace Brainf.Program;
 
 /// <summary>
 /// Interface used for implementing `Brainfuck` program.

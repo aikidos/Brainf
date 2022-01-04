@@ -4,14 +4,6 @@
         <name>Brainf</name>
     </assembly>
     <members>
-        <member name="T:Brainf.BrainfCompiler">
-            <summary>
-            Implementation of the `Brainfuck` compiler.
-            </summary>
-        </member>
-        <member name="M:Brainf.BrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
-            <inheritdoc />
-        </member>
         <member name="T:Brainf.BrainfKind">
             <summary>
             `Brainfuck` operation kind.
@@ -61,31 +53,6 @@
                   jump it back to the command after the matching [ command.
             </summary>
         </member>
-        <member name="T:Brainf.BrainfMemory">
-            <summary>
-            Implementation of the memory usage algorithm.  
-            </summary>
-        </member>
-        <member name="P:Brainf.BrainfMemory.Capacity">
-            <inheritdoc />
-        </member>
-        <member name="P:Brainf.BrainfMemory.Pointer">
-            <inheritdoc />
-        </member>
-        <member name="P:Brainf.BrainfMemory.CellValue">
-            <inheritdoc />
-        </member>
-        <member name="M:Brainf.BrainfMemory.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Initializes a new <see cref="T:Brainf.BrainfMemory"/>.
-            </summary>
-            <param name="capacityPositive">The total number of positive memory cells.</param>
-            <param name="capacityNegative">The total number of negative memory cells.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">
-                The <paramref name="capacityPositive"/> parameter is less than zero.
-                The <paramref name="capacityNegative"/> parameter is less than zero.
-            </exception>
-        </member>
         <member name="T:Brainf.BrainfOperation">
             <summary>
             `Brainfuck` program operation.
@@ -111,17 +78,6 @@
                 The <paramref name="count"/> parameter is less than or equal to zero.
             </exception>
         </member>
-        <member name="T:Brainf.BrainfParser">
-            <summary>
-            Implementation of the `Brainfuck` parser.
-            </summary>
-        </member>
-        <member name="M:Brainf.BrainfParser.Parse(System.String)">
-            <inheritdoc />
-        </member>
-        <member name="M:Brainf.BrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
-            <inheritdoc />
-        </member>
         <member name="T:Brainf.BrainfProgram">
             <summary>
             `Brainfuck` program.
@@ -144,34 +100,31 @@
         <member name="M:Brainf.BrainfProgram.GetOperations">
             <inheritdoc />
         </member>
-        <member name="T:Brainf.Exceptions.BrainfParseException">
+        <member name="T:Brainf.Compiler.BrainfCompiler">
             <summary>
-            The exception that is thrown when a syntax error is found in an programs source code.
+            Implementation of the `Brainfuck` compiler.
             </summary>
         </member>
-        <member name="M:Brainf.Exceptions.BrainfParseException.#ctor(System.String)">
-            <summary>
-            Initializes a new <see cref="T:Brainf.Exceptions.BrainfParseException"/>.
-            </summary>
-            <param name="message">Syntax error message.</param>
+        <member name="M:Brainf.Compiler.BrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
+            <inheritdoc />
         </member>
-        <member name="T:Brainf.IBrainfCompiler">
+        <member name="T:Brainf.Compiler.IBrainfCompiler">
             <summary>
             Interface used for implementing `Brainfuck` compiler.
             </summary>
         </member>
-        <member name="M:Brainf.IBrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
+        <member name="M:Brainf.Compiler.IBrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
              <summary>
              Compiles a program written in `Brainfuck` into a function.
              </summary>
              <param name="program">`Brainfuck` program.</param>
-             <typeparam name="TMemory">Type of implementation of the <see cref="T:Brainf.IBrainfMemory"/>.</typeparam>
-             <typeparam name="TStream">Type of implementation of the <see cref="T:Brainf.IBrainfStream"/>.</typeparam>
+             <typeparam name="TMemory">Type of implementation of the <see cref="T:Brainf.Memory.IBrainfMemory"/>.</typeparam>
+             <typeparam name="TStream">Type of implementation of the <see cref="T:Brainf.Streams.IBrainfStream"/>.</typeparam>
              <exception cref="T:System.ArgumentNullException">
                  The <paramref name="program"/> parameter is null.
              </exception>
-             <seealso cref="M:Brainf.IBrainfParser.Parse(System.String)"/>
-             <seealso cref="T:Brainf.IBrainfStream"/>
+             <seealso cref="M:Brainf.Parser.IBrainfParser.Parse(System.String)"/>
+             <seealso cref="T:Brainf.Streams.IBrainfStream"/>
              <example>
              <code>
                  const string sourceCode = ...;
@@ -190,21 +143,90 @@
              </code>
              </example>
         </member>
-        <member name="T:Brainf.IBrainfMemory">
+        <member name="T:Brainf.Exceptions.BrainfParseException">
+            <summary>
+            The exception that is thrown when a syntax error is found in an programs source code.
+            </summary>
+        </member>
+        <member name="M:Brainf.Exceptions.BrainfParseException.#ctor(System.String)">
+            <summary>
+            Initializes a new <see cref="T:Brainf.Exceptions.BrainfParseException"/>.
+            </summary>
+            <param name="message">Syntax error message.</param>
+        </member>
+        <member name="T:Brainf.IBrainfProgram">
+            <summary>
+            Interface used for implementing `Brainfuck` program.
+            </summary>
+        </member>
+        <member name="P:Brainf.IBrainfProgram.SourceCode">
+            <summary>
+            Gets the source code.
+            </summary>
+        </member>
+        <member name="M:Brainf.IBrainfProgram.GetOperations">
+            <summary>
+            Returns all program operations.
+            </summary>
+            <seealso cref="M:Brainf.Parser.IBrainfParser.Parse(System.String)"/>
+            <seealso cref="P:Brainf.BrainfOperation.Kind"/>
+            <example>
+            <code>
+                const string sourceCode = ...;
+             
+                var parser = new BrainfParser();
+             
+                var program = parser.Parse(sourceCode);
+             
+                var operations = program.GetOperations();
+             
+                for (int i = 0; i &lt; operations.Length; i++)
+                {
+                    Console.WriteLine(operations[i].Kind);
+                } 
+            </code>
+            </example>
+        </member>
+        <member name="T:Brainf.Memory.BrainfMemory">
+            <summary>
+            Implementation of the memory usage algorithm.
+            </summary>
+        </member>
+        <member name="P:Brainf.Memory.BrainfMemory.Capacity">
+            <inheritdoc />
+        </member>
+        <member name="P:Brainf.Memory.BrainfMemory.Pointer">
+            <inheritdoc />
+        </member>
+        <member name="P:Brainf.Memory.BrainfMemory.CellValue">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.Memory.BrainfMemory.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new <see cref="T:Brainf.Memory.BrainfMemory"/>.
+            </summary>
+            <param name="capacityPositive">The total number of positive memory cells.</param>
+            <param name="capacityNegative">The total number of negative memory cells.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+                The <paramref name="capacityPositive"/> parameter is less than zero.
+                The <paramref name="capacityNegative"/> parameter is less than zero.
+            </exception>
+        </member>
+        <member name="T:Brainf.Memory.IBrainfMemory">
             <summary>
             Interface used for implementing memory usage algorithm.
             </summary>
         </member>
-        <member name="P:Brainf.IBrainfMemory.Capacity">
+        <member name="P:Brainf.Memory.IBrainfMemory.Capacity">
             <summary>
             Gets the total number of memory cells.
             </summary>
         </member>
-        <member name="P:Brainf.IBrainfMemory.Pointer">
+        <member name="P:Brainf.Memory.IBrainfMemory.Pointer">
             <summary>
             Gets or sets the current memory pointer.
             </summary>
-            <seealso cref="P:Brainf.IBrainfMemory.CellValue"/>
+            <seealso cref="P:Brainf.Memory.IBrainfMemory.CellValue"/>
             <example>
             <code>
                 const string sourceCode = ...;
@@ -225,18 +247,29 @@
             </code>
             </example>
         </member>
-        <member name="P:Brainf.IBrainfMemory.CellValue">
+        <member name="P:Brainf.Memory.IBrainfMemory.CellValue">
             <summary>
             Gets or sets the current memory cell value.
             </summary>
-            <seealso cref="P:Brainf.IBrainfMemory.Pointer"/>
+            <seealso cref="P:Brainf.Memory.IBrainfMemory.Pointer"/>
         </member>
-        <member name="T:Brainf.IBrainfParser">
+        <member name="T:Brainf.Parser.BrainfParser">
+            <summary>
+            Implementation of the `Brainfuck` parser.
+            </summary>
+        </member>
+        <member name="M:Brainf.Parser.BrainfParser.Parse(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.Parser.BrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
+            <inheritdoc />
+        </member>
+        <member name="T:Brainf.Parser.IBrainfParser">
             <summary>
             Interface used for implementing `Brainfuck` source code parser.
             </summary>
         </member>
-        <member name="M:Brainf.IBrainfParser.Parse(System.String)">
+        <member name="M:Brainf.Parser.IBrainfParser.Parse(System.String)">
             <summary>
             Returns `Brainfuck` program from source code.
             </summary>
@@ -247,7 +280,7 @@
             <exception cref="T:Brainf.Exceptions.BrainfParseException">
                 The <paramref name="sourceCode"/> parameter contains syntax errors.
             </exception>
-            <seealso cref="M:Brainf.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)"/>
+            <seealso cref="M:Brainf.Parser.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)"/>
             <example>
             <code>
                 const string sourceCode = ...;
@@ -258,7 +291,7 @@
             </code>
             </example>
         </member>
-        <member name="M:Brainf.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
+        <member name="M:Brainf.Parser.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
             <summary>
             Returns `Brainfuck` program from source code.
             A return value indicates whether the parsing operation succeeded.
@@ -283,58 +316,9 @@
             </code>
             </example>
         </member>
-        <member name="T:Brainf.IBrainfProgram">
-            <summary>
-            Interface used for implementing `Brainfuck` program.
-            </summary>
-        </member>
-        <member name="P:Brainf.IBrainfProgram.SourceCode">
-            <summary>
-            Gets the source code.
-            </summary>
-        </member>
-        <member name="M:Brainf.IBrainfProgram.GetOperations">
-            <summary>
-            Returns all program operations.
-            </summary>
-            <seealso cref="M:Brainf.IBrainfParser.Parse(System.String)"/>
-            <seealso cref="P:Brainf.BrainfOperation.Kind"/>
-            <example>
-            <code>
-                const string sourceCode = ...;
-             
-                var parser = new BrainfParser();
-             
-                var program = parser.Parse(sourceCode);
-             
-                var operations = program.GetOperations();
-             
-                for (int i = 0; i &lt; operations.Length; i++)
-                {
-                    Console.WriteLine(operations[i].Kind);
-                } 
-            </code>
-            </example>
-        </member>
-        <member name="T:Brainf.IBrainfStream">
-            <summary>
-            Interface used for implementing stream.
-            </summary>
-        </member>
-        <member name="M:Brainf.IBrainfStream.Write(System.Int32)">
-            <summary>
-            Writes the specified value.
-            </summary>
-            <param name="value">Value.</param>
-        </member>
-        <member name="M:Brainf.IBrainfStream.Read">
-            <summary>
-            Reads a value.
-            </summary>
-        </member>
         <member name="T:Brainf.Streams.BrainfStreams">
             <summary>
-            Contains reusable static instances of known implementations of the <see cref="T:Brainf.IBrainfStream"/>.
+            Contains reusable static instances of known implementations of the <see cref="T:Brainf.Streams.IBrainfStream"/>.
             </summary>
         </member>
         <member name="P:Brainf.Streams.BrainfStreams.Empty">
@@ -354,7 +338,7 @@
         </member>
         <member name="T:Brainf.Streams.ConsoleBrainfStream">
             <summary>
-            Implementation of the console stream. 
+            Implementation of the console stream.
             </summary>
         </member>
         <member name="M:Brainf.Streams.ConsoleBrainfStream.Write(System.Int32)">
@@ -373,6 +357,22 @@
         </member>
         <member name="M:Brainf.Streams.EmptyBrainfStream.Read">
             <inheritdoc />
+        </member>
+        <member name="T:Brainf.Streams.IBrainfStream">
+            <summary>
+            Interface used for implementing stream.
+            </summary>
+        </member>
+        <member name="M:Brainf.Streams.IBrainfStream.Write(System.Int32)">
+            <summary>
+            Writes the specified value.
+            </summary>
+            <param name="value">Value.</param>
+        </member>
+        <member name="M:Brainf.Streams.IBrainfStream.Read">
+            <summary>
+            Reads a value.
+            </summary>
         </member>
         <member name="T:Brainf.Streams.StringBrainfStream">
             <summary>

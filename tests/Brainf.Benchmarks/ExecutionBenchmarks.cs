@@ -1,4 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Brainf.Compiler;
+using Brainf.Memory;
+using Brainf.Parser;
+using Brainf.Program;
 using Brainf.Streams;
 
 namespace Brainf.Benchmarks;

@@ -1,3 +1,4 @@
+using Brainf.Memory;
 using Xunit;
 
 namespace Brainf.Tests;

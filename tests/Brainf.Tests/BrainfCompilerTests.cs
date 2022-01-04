@@ -1,4 +1,7 @@
-﻿using Brainf.Streams;
+﻿using Brainf.Compiler;
+using Brainf.Memory;
+using Brainf.Parser;
+using Brainf.Streams;
 using Xunit;
 
 namespace Brainf.Tests;

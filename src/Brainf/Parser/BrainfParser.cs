@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Brainf.Exceptions;
+using Brainf.Program;
 
-namespace Brainf;
+namespace Brainf.Parser;
 
 /// <summary>
 /// Implementation of the `Brainfuck` parser.
@@ -17,16 +18,14 @@ public sealed class BrainfParser : IBrainfParser
         if (sourceCode == null)
             throw new ArgumentNullException(nameof(sourceCode));
 
-        if (!TryParse(sourceCode, out var program, out var errorMessage))
-        {
-            throw new BrainfParseException(errorMessage);
-        }
-
-        return program;
+        return TryParse(sourceCode, out var program, out var errorMessage)
+            ? program
+            : throw new BrainfParseException(errorMessage);
     }
 
     /// <inheritdoc />
-    public bool TryParse(string sourceCode,
+    public bool TryParse(
+        string sourceCode,
         [NotNullWhen(true)] out IBrainfProgram? program,
         [NotNullWhen(false)] out string? errorMessage)
     {
@@ -35,7 +34,7 @@ public sealed class BrainfParser : IBrainfParser
 
         if (string.IsNullOrWhiteSpace(sourceCode))
         {
-            program = new BrainfProgram(sourceCode, Enumerable.Empty<BrainfOperation>());
+            program = new BrainfProgram(string.Empty, Enumerable.Empty<BrainfOperation>());
             errorMessage = null;
             return true;
         }

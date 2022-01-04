@@ -1,4 +1,4 @@
-﻿namespace Brainf;
+﻿namespace Brainf.Program;
 
 /// <summary>
 /// `Brainfuck` operation kind.
@@ -34,14 +34,14 @@ public enum BrainfKind
     /// `,` — accept one byte of input, storing its value in the byte at the data pointer.
     /// </summary>
     In,
-        
+
     /// <summary>
     /// `[` — if the byte at the data pointer is zero,
     ///       then instead of moving the instruction pointer forward to the next command,
     ///       jump it forward to the command after the matching ] command.
     /// </summary>
     LoopStart,
-        
+
     /// <summary>
     /// `]` — if the byte at the data pointer is nonzero,
     ///       then instead of moving the instruction pointer forward to the next command,

@@ -1,4 +1,4 @@
-﻿namespace Brainf;
+﻿namespace Brainf.Memory;
 
 /// <summary>
 /// Interface used for implementing memory usage algorithm.

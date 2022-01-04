@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using Brainf.Parser;
+using Brainf.Program;
+using Xunit;
 
 namespace Brainf.Tests;
 

@@ -1,4 +1,4 @@
-﻿namespace Brainf;
+﻿namespace Brainf.Streams;
 
 /// <summary>
 /// Interface used for implementing stream.

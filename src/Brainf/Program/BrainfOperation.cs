@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Brainf;
+namespace Brainf.Program;
 
 /// <summary>
 /// `Brainfuck` program operation.
@@ -29,7 +29,7 @@ public readonly struct BrainfOperation
     /// </exception>
     public BrainfOperation(BrainfKind kind, int count)
     {
-        if (count < 0) 
+        if (count < 0)
             throw new ArgumentOutOfRangeException(nameof(count));
 
         Kind = kind;

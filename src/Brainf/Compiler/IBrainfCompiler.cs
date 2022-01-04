@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Brainf.Memory;
+using Brainf.Parser;
+using Brainf.Program;
+using Brainf.Streams;
 
-namespace Brainf;
+namespace Brainf.Compiler;
 
 /// <summary>
 /// Interface used for implementing `Brainfuck` compiler.

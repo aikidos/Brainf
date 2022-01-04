@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Brainf;
+namespace Brainf.Program;
 
 /// <summary>
 /// `Brainfuck` program.
@@ -25,13 +25,13 @@ public sealed class BrainfProgram : IBrainfProgram
     /// </exception>
     internal BrainfProgram(string sourceCode, IEnumerable<BrainfOperation> operations)
     {
-        SourceCode = sourceCode ?? throw new ArgumentNullException(nameof(sourceCode));
-        _operations = operations?.ToArray() ?? throw new ArgumentNullException(nameof(operations));
+        SourceCode = sourceCode;
+        _operations = operations.ToArray();
     }
 
     /// <inheritdoc />
     public ReadOnlySpan<BrainfOperation> GetOperations()
     {
-        return _operations.AsSpan();
+        return _operations;
     }
 }

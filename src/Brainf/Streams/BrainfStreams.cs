@@ -8,15 +8,15 @@ public static class BrainfStreams
     /// <summary>
     /// Implementation of the empty stream.
     /// </summary>
-    public static EmptyBrainfStream Empty { get; } = new EmptyBrainfStream();
+    public static EmptyBrainfStream Empty { get; } = new();
 
     /// <summary>
     /// Implementation of write a stream to a string.
     /// </summary>
-    public static StringBrainfStream String { get; } = new StringBrainfStream();
+    public static StringBrainfStream String { get; } = new();
 
     /// <summary>
     /// <see cref="System.Console"/> methods: <see cref="System.Console.Write(int)"/>, <see cref="System.Console.Read"/>.
     /// </summary>
-    public static ConsoleBrainfStream Console { get; } = new ConsoleBrainfStream();
+    public static ConsoleBrainfStream Console { get; } = new();
 }

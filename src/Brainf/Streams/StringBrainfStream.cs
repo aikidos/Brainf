@@ -7,7 +7,7 @@ namespace Brainf.Streams;
 /// </summary>
 public sealed class StringBrainfStream : IBrainfStream
 {
-    private readonly StringBuilder _builder = new StringBuilder();
+    private readonly StringBuilder _builder = new();
 
     /// <summary>
     /// Returns the resulting string.
@@ -20,7 +20,7 @@ public sealed class StringBrainfStream : IBrainfStream
     /// <inheritdoc />
     public void Write(int value)
     {
-        _builder.Append((char) value);
+        _builder.Append((char)value);
     }
 
     /// <inheritdoc />

@@ -2,8 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Brainf.Exceptions;
+using Brainf.Program;
 
-namespace Brainf;
+namespace Brainf.Parser;
 
 /// <summary>
 /// Interface used for implementing `Brainfuck` source code parser.
@@ -57,7 +58,8 @@ public interface IBrainfParser
     /// </code>
     /// </example>
     [Pure]
-    bool TryParse(string sourceCode, 
-        [NotNullWhen(true)] out IBrainfProgram? program, 
+    bool TryParse(
+        string sourceCode,
+        [NotNullWhen(true)] out IBrainfProgram? program,
         [NotNullWhen(false)] out string? errorMessage);
 }
