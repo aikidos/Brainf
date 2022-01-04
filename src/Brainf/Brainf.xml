@@ -6,12 +6,7 @@
     <members>
         <member name="T:Brainf.BrainfCompiler">
             <summary>
-            Implementation of the `Brainfuck` compiler. 
-            </summary>
-        </member>
-        <member name="P:Brainf.BrainfCompiler.Default">
-            <summary>
-            Default implementation the `Brainfuck` compiler.
+            Implementation of the `Brainfuck` compiler.
             </summary>
         </member>
         <member name="M:Brainf.BrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
@@ -118,12 +113,7 @@
         </member>
         <member name="T:Brainf.BrainfParser">
             <summary>
-            Implementation of the `Brainfuck` parser. 
-            </summary>
-        </member>
-        <member name="P:Brainf.BrainfParser.Default">
-            <summary>
-            Default implementation the `Brainfuck` parser.
+            Implementation of the `Brainfuck` parser.
             </summary>
         </member>
         <member name="M:Brainf.BrainfParser.Parse(System.String)">
@@ -171,34 +161,34 @@
             </summary>
         </member>
         <member name="M:Brainf.IBrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
-            <summary>
-            Compiles a program written in `Brainfuck` into a function.
-            </summary>
-            <param name="program">`Brainfuck` program.</param>
-            <typeparam name="TMemory">Type of implementation of the <see cref="T:Brainf.IBrainfMemory"/>.</typeparam>
-            <typeparam name="TStream">Type of implementation of the <see cref="T:Brainf.IBrainfStream"/>.</typeparam>
-            <exception cref="T:System.ArgumentNullException">
-                The <paramref name="program"/> parameter is null.
-            </exception>
-            <seealso cref="M:Brainf.IBrainfParser.Parse(System.String)"/>
-            <seealso cref="T:Brainf.IBrainfStream"/>
-            <example>
-            <code>
-                const string sourceCode = ...;
-             
-                var parser = BrainfParser.Default;
-                var compiler = BrainfCompiler.Default;
-             
-                var program = parser.Parse(sourceCode);
-             
-                var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
-             
-                var memory = new BrainfMemory();
-                var stream = BrainfStreams.Console;
-             
-                func(memory, stream);   
-            </code>
-            </example>
+             <summary>
+             Compiles a program written in `Brainfuck` into a function.
+             </summary>
+             <param name="program">`Brainfuck` program.</param>
+             <typeparam name="TMemory">Type of implementation of the <see cref="T:Brainf.IBrainfMemory"/>.</typeparam>
+             <typeparam name="TStream">Type of implementation of the <see cref="T:Brainf.IBrainfStream"/>.</typeparam>
+             <exception cref="T:System.ArgumentNullException">
+                 The <paramref name="program"/> parameter is null.
+             </exception>
+             <seealso cref="M:Brainf.IBrainfParser.Parse(System.String)"/>
+             <seealso cref="T:Brainf.IBrainfStream"/>
+             <example>
+             <code>
+                 const string sourceCode = ...;
+            
+                 var parser = new BrainfParser();
+                 var compiler = new BrainfCompiler();
+            
+                 var program = parser.Parse(sourceCode);
+            
+                 var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
+            
+                 var memory = new BrainfMemory();
+                 var stream = BrainfStreams.Console;
+            
+                 func(memory, stream);
+             </code>
+             </example>
         </member>
         <member name="T:Brainf.IBrainfMemory">
             <summary>
@@ -262,7 +252,7 @@
             <code>
                 const string sourceCode = ...;
              
-                var parser = BrainfParser.Default;
+                var parser = new BrainfParser();
              
                 var program = parser.Parse(sourceCode);
             </code>
@@ -283,7 +273,7 @@
             <code>
                 const string sourceCode = ...;
              
-                var parser = BrainfParser.Default;
+                var parser = new BrainfParser();
              
                 if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
                 {
@@ -313,7 +303,7 @@
             <code>
                 const string sourceCode = ...;
              
-                var parser = BrainfParser.Default;
+                var parser = new BrainfParser();
              
                 var program = parser.Parse(sourceCode);
              

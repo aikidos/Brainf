@@ -7,19 +7,14 @@ using Brainf.Exceptions;
 namespace Brainf;
 
 /// <summary>
-/// Implementation of the `Brainfuck` parser. 
+/// Implementation of the `Brainfuck` parser.
 /// </summary>
 public sealed class BrainfParser : IBrainfParser
 {
-    /// <summary>
-    /// Default implementation the `Brainfuck` parser.
-    /// </summary>
-    public static IBrainfParser Default { get; } = new BrainfParser();
-        
     /// <inheritdoc />
     public IBrainfProgram Parse(string sourceCode)
     {
-        if (sourceCode == null) 
+        if (sourceCode == null)
             throw new ArgumentNullException(nameof(sourceCode));
 
         if (!TryParse(sourceCode, out var program, out var errorMessage))
@@ -31,8 +26,8 @@ public sealed class BrainfParser : IBrainfParser
     }
 
     /// <inheritdoc />
-    public bool TryParse(string sourceCode, 
-        [NotNullWhen(true)] out IBrainfProgram? program, 
+    public bool TryParse(string sourceCode,
+        [NotNullWhen(true)] out IBrainfProgram? program,
         [NotNullWhen(false)] out string? errorMessage)
     {
         if (sourceCode == null)

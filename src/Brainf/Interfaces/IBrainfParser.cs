@@ -25,7 +25,7 @@ public interface IBrainfParser
     /// <code>
     ///     const string sourceCode = ...;
     ///  
-    ///     var parser = BrainfParser.Default;
+    ///     var parser = new BrainfParser();
     ///  
     ///     var program = parser.Parse(sourceCode);
     /// </code>
@@ -47,7 +47,7 @@ public interface IBrainfParser
     /// <code>
     ///     const string sourceCode = ...;
     ///  
-    ///     var parser = BrainfParser.Default;
+    ///     var parser = new BrainfParser();
     ///  
     ///     if (!parser.TryParse(sourceCode, out var program, out var errorMessage))
     ///     {

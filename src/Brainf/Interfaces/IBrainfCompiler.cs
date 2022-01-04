@@ -22,18 +22,18 @@ public interface IBrainfCompiler
     /// <example>
     /// <code>
     ///     const string sourceCode = ...;
-    ///  
-    ///     var parser = BrainfParser.Default;
-    ///     var compiler = BrainfCompiler.Default;
-    ///  
+    ///
+    ///     var parser = new BrainfParser();
+    ///     var compiler = new BrainfCompiler();
+    ///
     ///     var program = parser.Parse(sourceCode);
-    ///  
+    ///
     ///     var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
-    ///  
+    ///
     ///     var memory = new BrainfMemory();
     ///     var stream = BrainfStreams.Console;
-    ///  
-    ///     func(memory, stream);   
+    ///
+    ///     func(memory, stream);
     /// </code>
     /// </example>
     [Pure]

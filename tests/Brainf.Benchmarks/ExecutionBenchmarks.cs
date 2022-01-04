@@ -12,6 +12,8 @@ public class ExecutionBenchmarks
 ++++++++[>++++++++++[>++++++++++[>++++++++++[>+
 +++++++++[-]<-]<-]<-]<-]<-]<-]<-]++++++++++.";
 
+    private readonly BrainfParser _parser = new();
+    private readonly BrainfCompiler _compiler = new();
     private BrainfMemory _memory;
 
     [IterationSetup]
@@ -29,11 +31,8 @@ public class ExecutionBenchmarks
     [Benchmark]
     public IBrainfProgram Brainf()
     {
-        var parser = BrainfParser.Default;
-        var compiler = BrainfCompiler.Default;
-
-        var program = parser.Parse(SourceCode);
-        var func = compiler.Compile<BrainfMemory, EmptyBrainfStream>(program);
+        var program = _parser.Parse(SourceCode);
+        var func = _compiler.Compile<BrainfMemory, EmptyBrainfStream>(program);
 
         func(_memory, BrainfStreams.Empty);
 

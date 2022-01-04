@@ -22,7 +22,7 @@ public interface IBrainfProgram
     /// <code>
     ///     const string sourceCode = ...;
     ///  
-    ///     var parser = BrainfParser.Default;
+    ///     var parser = new BrainfParser();
     ///  
     ///     var program = parser.Parse(sourceCode);
     ///  

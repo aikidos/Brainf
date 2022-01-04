@@ -10,11 +10,6 @@ namespace Brainf;
 /// </summary>
 public sealed class BrainfCompiler : IBrainfCompiler
 {
-    /// <summary>
-    /// Default implementation the `Brainfuck` compiler.
-    /// </summary>
-    public static IBrainfCompiler Default { get; } = new BrainfCompiler();
-
     /// <inheritdoc />
     public Action<TMemory, TStream> Compile<TMemory, TStream>(IBrainfProgram program)
         where TMemory : IBrainfMemory
