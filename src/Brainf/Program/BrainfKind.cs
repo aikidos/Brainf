@@ -26,14 +26,14 @@ public enum BrainfKind
     Dec,
 
     /// <summary>
-    /// `.` — output the byte at the data pointer.
-    /// </summary>
-    Out,
-
-    /// <summary>
     /// `,` — accept one byte of input, storing its value in the byte at the data pointer.
     /// </summary>
     In,
+
+    /// <summary>
+    /// `.` — output the byte at the data pointer.
+    /// </summary>
+    Out,
 
     /// <summary>
     /// `[` — if the byte at the data pointer is zero,

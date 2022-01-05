@@ -1,9 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Brainf.Compiler;
+using Brainf.IO;
 using Brainf.Memory;
 using Brainf.Parser;
 using Brainf.Program;
-using Brainf.Streams;
 
 namespace Brainf.Benchmarks;
 
@@ -38,7 +38,7 @@ public class ExecutionBenchmarks
         var program = _parser.Parse(SourceCode);
         var func = _compiler.Compile(program);
 
-        func(_memory, BrainfStreams.Empty);
+        func(_memory, BrainfIO.Empty);
 
         return program;
     }

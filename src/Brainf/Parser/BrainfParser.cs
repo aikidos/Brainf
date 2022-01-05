@@ -69,12 +69,12 @@ public sealed class BrainfParser : IBrainfParser
                     kind = BrainfKind.Dec;
                     break;
 
-                case '.':
-                    kind = BrainfKind.Out;
-                    break;
-
                 case ',':
                     kind = BrainfKind.In;
+                    break;
+
+                case '.':
+                    kind = BrainfKind.Out;
                     break;
 
                 case '[':

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using Brainf.IO;
 using Brainf.Memory;
 using Brainf.Parser;
 using Brainf.Program;
-using Brainf.Streams;
 
 namespace Brainf.Compiler;
 
@@ -20,7 +20,7 @@ public interface IBrainfCompiler
     ///     The <paramref name="program"/> parameter is null.
     /// </exception>
     /// <seealso cref="IBrainfParser.Parse"/>
-    /// <seealso cref="IBrainfStream"/>
+    /// <seealso cref="IBrainfIO"/>
     /// <example>
     /// <code>
     ///     const string sourceCode = ...;
@@ -34,9 +34,9 @@ public interface IBrainfCompiler
     ///
     ///     var memory = new BrainfMemory();
     ///
-    ///     func(memory, BrainfStreams.Console);
+    ///     func(memory, BrainfIO.Console);
     /// </code>
     /// </example>
     [Pure]
-    Action<IBrainfMemory, IBrainfStream> Compile(IBrainfProgram program);
+    Action<IBrainfMemory, IBrainfIO> Compile(IBrainfProgram program);
 }

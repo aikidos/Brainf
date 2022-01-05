@@ -1,11 +1,11 @@
 ﻿using System.Text;
 
-namespace Brainf.Streams;
+namespace Brainf.IO;
 
 /// <summary>
-/// Implementation of write a stream to a string.
+/// Implementation of input/output to a string.
 /// </summary>
-public sealed class StringBrainfStream : IBrainfStream
+public sealed class StringBrainfIO : IBrainfIO
 {
     private readonly StringBuilder _builder = new();
 
@@ -18,14 +18,14 @@ public sealed class StringBrainfStream : IBrainfStream
     }
 
     /// <inheritdoc />
-    public void Write(int value)
+    public int Input()
     {
-        _builder.Append((char)value);
+        throw new System.NotImplementedException();
     }
 
     /// <inheritdoc />
-    public int Read()
+    public void Output(int value)
     {
-        throw new System.NotImplementedException();
+        _builder.Append((char)value);
     }
 }

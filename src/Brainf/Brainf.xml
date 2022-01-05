@@ -26,7 +26,7 @@
                  The <paramref name="program"/> parameter is null.
              </exception>
              <seealso cref="M:Brainf.Parser.IBrainfParser.Parse(System.String)"/>
-             <seealso cref="T:Brainf.Streams.IBrainfStream"/>
+             <seealso cref="T:Brainf.IO.IBrainfIO"/>
              <example>
              <code>
                  const string sourceCode = ...;
@@ -40,7 +40,7 @@
             
                  var memory = new BrainfMemory();
             
-                 func(memory, BrainfStreams.Console);
+                 func(memory, BrainfIO.Console);
              </code>
              </example>
         </member>
@@ -54,6 +54,80 @@
             Initializes a new <see cref="T:Brainf.Exceptions.BrainfParseException"/>.
             </summary>
             <param name="message">Syntax error message.</param>
+        </member>
+        <member name="T:Brainf.IO.BrainfIO">
+            <summary>
+            Contains reusable static instances of known implementations of the <see cref="T:Brainf.IO.IBrainfIO"/>.
+            </summary>
+        </member>
+        <member name="P:Brainf.IO.BrainfIO.Empty">
+            <summary>
+            Implementation of the empty input/output.
+            </summary>
+        </member>
+        <member name="P:Brainf.IO.BrainfIO.Console">
+            <summary>
+            Implementation of the console input/output.
+            </summary>
+        </member>
+        <member name="M:Brainf.IO.BrainfIO.CreateString">
+            <summary>
+            Returns new instance of the implementation input/output to a string.
+            </summary>
+        </member>
+        <member name="T:Brainf.IO.ConsoleBrainfIO">
+            <summary>
+            Implementation of the console input/output.
+            </summary>
+        </member>
+        <member name="M:Brainf.IO.ConsoleBrainfIO.Input">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.IO.ConsoleBrainfIO.Output(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:Brainf.IO.EmptyBrainfIO">
+            <summary>
+            Implementation of the empty input/output.
+            </summary>
+        </member>
+        <member name="M:Brainf.IO.EmptyBrainfIO.Input">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.IO.EmptyBrainfIO.Output(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:Brainf.IO.IBrainfIO">
+            <summary>
+            Interface used for implementing input/output.
+            </summary>
+        </member>
+        <member name="M:Brainf.IO.IBrainfIO.Input">
+            <summary>
+            Input a value.
+            </summary>
+        </member>
+        <member name="M:Brainf.IO.IBrainfIO.Output(System.Int32)">
+            <summary>
+            Output the specified value.
+            </summary>
+            <param name="value">Value.</param>
+        </member>
+        <member name="T:Brainf.IO.StringBrainfIO">
+            <summary>
+            Implementation of input/output to a string.
+            </summary>
+        </member>
+        <member name="M:Brainf.IO.StringBrainfIO.GetString">
+            <summary>
+            Returns the resulting string.
+            </summary>
+        </member>
+        <member name="M:Brainf.IO.StringBrainfIO.Input">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.IO.StringBrainfIO.Output(System.Int32)">
+            <inheritdoc />
         </member>
         <member name="T:Brainf.Memory.BrainfMemory">
             <summary>
@@ -209,14 +283,14 @@
             `-` — decrement (decrease by one) the byte at the data pointer.
             </summary>
         </member>
-        <member name="F:Brainf.Program.BrainfKind.Out">
-            <summary>
-            `.` — output the byte at the data pointer.
-            </summary>
-        </member>
         <member name="F:Brainf.Program.BrainfKind.In">
             <summary>
             `,` — accept one byte of input, storing its value in the byte at the data pointer.
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.Out">
+            <summary>
+            `.` — output the byte at the data pointer.
             </summary>
         </member>
         <member name="F:Brainf.Program.BrainfKind.LoopStart">
@@ -312,80 +386,6 @@
                 } 
             </code>
             </example>
-        </member>
-        <member name="T:Brainf.Streams.BrainfStreams">
-            <summary>
-            Contains reusable static instances of known implementations of the <see cref="T:Brainf.Streams.IBrainfStream"/>.
-            </summary>
-        </member>
-        <member name="P:Brainf.Streams.BrainfStreams.Empty">
-            <summary>
-            Implementation of the empty stream.
-            </summary>
-        </member>
-        <member name="P:Brainf.Streams.BrainfStreams.String">
-            <summary>
-            Implementation of write a stream to a string.
-            </summary>
-        </member>
-        <member name="P:Brainf.Streams.BrainfStreams.Console">
-            <summary>
-            <see cref="T:System.Console"/> methods: <see cref="M:System.Console.Write(System.Int32)"/>, <see cref="M:System.Console.Read"/>.
-            </summary>
-        </member>
-        <member name="T:Brainf.Streams.ConsoleBrainfStream">
-            <summary>
-            Implementation of the console stream.
-            </summary>
-        </member>
-        <member name="M:Brainf.Streams.ConsoleBrainfStream.Write(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:Brainf.Streams.ConsoleBrainfStream.Read">
-            <inheritdoc />
-        </member>
-        <member name="T:Brainf.Streams.EmptyBrainfStream">
-            <summary>
-            Implementation of the empty stream.
-            </summary>
-        </member>
-        <member name="M:Brainf.Streams.EmptyBrainfStream.Write(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:Brainf.Streams.EmptyBrainfStream.Read">
-            <inheritdoc />
-        </member>
-        <member name="T:Brainf.Streams.IBrainfStream">
-            <summary>
-            Interface used for implementing stream.
-            </summary>
-        </member>
-        <member name="M:Brainf.Streams.IBrainfStream.Write(System.Int32)">
-            <summary>
-            Writes the specified value.
-            </summary>
-            <param name="value">Value.</param>
-        </member>
-        <member name="M:Brainf.Streams.IBrainfStream.Read">
-            <summary>
-            Reads a value.
-            </summary>
-        </member>
-        <member name="T:Brainf.Streams.StringBrainfStream">
-            <summary>
-            Implementation of write a stream to a string.
-            </summary>
-        </member>
-        <member name="M:Brainf.Streams.StringBrainfStream.GetString">
-            <summary>
-            Returns the resulting string.
-            </summary>
-        </member>
-        <member name="M:Brainf.Streams.StringBrainfStream.Write(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:Brainf.Streams.StringBrainfStream.Read">
-            <inheritdoc />
         </member>
     </members>
 </doc>

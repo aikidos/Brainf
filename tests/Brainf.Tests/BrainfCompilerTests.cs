@@ -1,7 +1,7 @@
 ﻿using Brainf.Compiler;
+using Brainf.IO;
 using Brainf.Memory;
 using Brainf.Parser;
-using Brainf.Streams;
 using Xunit;
 
 namespace Brainf.Tests;
@@ -22,14 +22,14 @@ public sealed class BrainfCompilerTests
         var compiler = new BrainfCompiler();
 
         var memory = new BrainfMemory();
-        var stream = new StringBrainfStream();
+        var io = BrainfIO.CreateString();
 
         // Act
         var program = parser.Parse(sourceCode);
         var func = compiler.Compile(program);
-        func(memory, stream);
-            
+        func(memory, io);
+
         // Assert
-        Assert.Equal("ZYXWVUTSRQPONMLKJIHGFEDCBA", stream.GetString());
+        Assert.Equal("ZYXWVUTSRQPONMLKJIHGFEDCBA", io.GetString());
     }
 }
