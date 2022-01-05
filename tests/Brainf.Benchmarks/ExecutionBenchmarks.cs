@@ -36,7 +36,7 @@ public class ExecutionBenchmarks
     public IBrainfProgram Brainf()
     {
         var program = _parser.Parse(SourceCode);
-        var func = _compiler.Compile<BrainfMemory, EmptyBrainfStream>(program);
+        var func = _compiler.Compile(program);
 
         func(_memory, BrainfStreams.Empty);
 

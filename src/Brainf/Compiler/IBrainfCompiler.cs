@@ -16,8 +16,6 @@ public interface IBrainfCompiler
     /// Compiles a program written in `Brainfuck` into a function.
     /// </summary>
     /// <param name="program">`Brainfuck` program.</param>
-    /// <typeparam name="TMemory">Type of implementation of the <see cref="IBrainfMemory"/>.</typeparam>
-    /// <typeparam name="TStream">Type of implementation of the <see cref="IBrainfStream"/>.</typeparam>
     /// <exception cref="ArgumentNullException">
     ///     The <paramref name="program"/> parameter is null.
     /// </exception>
@@ -32,16 +30,13 @@ public interface IBrainfCompiler
     ///
     ///     var program = parser.Parse(sourceCode);
     ///
-    ///     var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
+    ///     var func = compiler.Compile(program);
     ///
     ///     var memory = new BrainfMemory();
-    ///     var stream = BrainfStreams.Console;
     ///
-    ///     func(memory, stream);
+    ///     func(memory, BrainfStreams.Console);
     /// </code>
     /// </example>
     [Pure]
-    Action<TMemory, TStream> Compile<TMemory, TStream>(IBrainfProgram program)
-        where TMemory : IBrainfMemory
-        where TStream : IBrainfStream;
+    Action<IBrainfMemory, IBrainfStream> Compile(IBrainfProgram program);
 }

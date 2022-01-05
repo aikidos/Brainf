@@ -26,7 +26,7 @@ public sealed class BrainfCompilerTests
 
         // Act
         var program = parser.Parse(sourceCode);
-        var func = compiler.Compile<BrainfMemory, StringBrainfStream>(program);
+        var func = compiler.Compile(program);
         func(memory, stream);
             
         // Assert

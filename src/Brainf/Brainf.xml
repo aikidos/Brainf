@@ -4,108 +4,12 @@
         <name>Brainf</name>
     </assembly>
     <members>
-        <member name="T:Brainf.BrainfKind">
-            <summary>
-            `Brainfuck` operation kind.
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.MoveR">
-            <summary>
-            `&gt;` — increment the data pointer (to point to the next cell to the right).
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.MoveL">
-            <summary>
-            `&lt;` — decrement the data pointer (to point to the next cell to the left).
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.Inc">
-            <summary>
-            `+` — increment (increase by one) the byte at the data pointer.
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.Dec">
-            <summary>
-            `-` — decrement (decrease by one) the byte at the data pointer.
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.Out">
-            <summary>
-            `.` — output the byte at the data pointer.
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.In">
-            <summary>
-            `,` — accept one byte of input, storing its value in the byte at the data pointer.
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.LoopStart">
-            <summary>
-            `[` — if the byte at the data pointer is zero,
-                  then instead of moving the instruction pointer forward to the next command,
-                  jump it forward to the command after the matching ] command.
-            </summary>
-        </member>
-        <member name="F:Brainf.BrainfKind.LoopEnd">
-            <summary>
-            `]` — if the byte at the data pointer is nonzero,
-                  then instead of moving the instruction pointer forward to the next command,
-                  jump it back to the command after the matching [ command.
-            </summary>
-        </member>
-        <member name="T:Brainf.BrainfOperation">
-            <summary>
-            `Brainfuck` program operation.
-            </summary>
-        </member>
-        <member name="P:Brainf.BrainfOperation.Kind">
-            <summary>
-            Gets the operation kind.
-            </summary>
-        </member>
-        <member name="P:Brainf.BrainfOperation.Count">
-            <summary>
-            Gets the number of repetitions of the operation.
-            </summary>
-        </member>
-        <member name="M:Brainf.BrainfOperation.#ctor(Brainf.BrainfKind,System.Int32)">
-            <summary>
-            Initializes a new <see cref="T:Brainf.BrainfOperation"/>.
-            </summary>
-            <param name="kind">Operation kind.</param>
-            <param name="count">Program operations.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">
-                The <paramref name="count"/> parameter is less than or equal to zero.
-            </exception>
-        </member>
-        <member name="T:Brainf.BrainfProgram">
-            <summary>
-            `Brainfuck` program.
-            </summary>
-        </member>
-        <member name="P:Brainf.BrainfProgram.SourceCode">
-            <inheritdoc />
-        </member>
-        <member name="M:Brainf.BrainfProgram.#ctor(System.String,System.Collections.Generic.IEnumerable{Brainf.BrainfOperation})">
-            <summary>
-            Initializes a new <see cref="T:Brainf.BrainfProgram"/>.
-            </summary>
-            <param name="sourceCode">The source code.</param>
-            <param name="operations">Program operations.</param>
-            <exception cref="T:System.ArgumentNullException">
-                The <paramref name="sourceCode"/> parameter is null.
-                The <paramref name="operations"/> parameter is null.
-            </exception>
-        </member>
-        <member name="M:Brainf.BrainfProgram.GetOperations">
-            <inheritdoc />
-        </member>
         <member name="T:Brainf.Compiler.BrainfCompiler">
             <summary>
             Implementation of the `Brainfuck` compiler.
             </summary>
         </member>
-        <member name="M:Brainf.Compiler.BrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
+        <member name="M:Brainf.Compiler.BrainfCompiler.Compile(Brainf.Program.IBrainfProgram)">
             <inheritdoc />
         </member>
         <member name="T:Brainf.Compiler.IBrainfCompiler">
@@ -113,13 +17,11 @@
             Interface used for implementing `Brainfuck` compiler.
             </summary>
         </member>
-        <member name="M:Brainf.Compiler.IBrainfCompiler.Compile``2(Brainf.IBrainfProgram)">
+        <member name="M:Brainf.Compiler.IBrainfCompiler.Compile(Brainf.Program.IBrainfProgram)">
              <summary>
              Compiles a program written in `Brainfuck` into a function.
              </summary>
              <param name="program">`Brainfuck` program.</param>
-             <typeparam name="TMemory">Type of implementation of the <see cref="T:Brainf.Memory.IBrainfMemory"/>.</typeparam>
-             <typeparam name="TStream">Type of implementation of the <see cref="T:Brainf.Streams.IBrainfStream"/>.</typeparam>
              <exception cref="T:System.ArgumentNullException">
                  The <paramref name="program"/> parameter is null.
              </exception>
@@ -134,12 +36,11 @@
             
                  var program = parser.Parse(sourceCode);
             
-                 var func = compiler.Compile&lt;BrainfMemory, ConsoleBrainfStream&gt;(program);
+                 var func = compiler.Compile(program);
             
                  var memory = new BrainfMemory();
-                 var stream = BrainfStreams.Console;
             
-                 func(memory, stream);
+                 func(memory, BrainfStreams.Console);
              </code>
              </example>
         </member>
@@ -153,39 +54,6 @@
             Initializes a new <see cref="T:Brainf.Exceptions.BrainfParseException"/>.
             </summary>
             <param name="message">Syntax error message.</param>
-        </member>
-        <member name="T:Brainf.IBrainfProgram">
-            <summary>
-            Interface used for implementing `Brainfuck` program.
-            </summary>
-        </member>
-        <member name="P:Brainf.IBrainfProgram.SourceCode">
-            <summary>
-            Gets the source code.
-            </summary>
-        </member>
-        <member name="M:Brainf.IBrainfProgram.GetOperations">
-            <summary>
-            Returns all program operations.
-            </summary>
-            <seealso cref="M:Brainf.Parser.IBrainfParser.Parse(System.String)"/>
-            <seealso cref="P:Brainf.BrainfOperation.Kind"/>
-            <example>
-            <code>
-                const string sourceCode = ...;
-             
-                var parser = new BrainfParser();
-             
-                var program = parser.Parse(sourceCode);
-             
-                var operations = program.GetOperations();
-             
-                for (int i = 0; i &lt; operations.Length; i++)
-                {
-                    Console.WriteLine(operations[i].Kind);
-                } 
-            </code>
-            </example>
         </member>
         <member name="T:Brainf.Memory.BrainfMemory">
             <summary>
@@ -261,7 +129,7 @@
         <member name="M:Brainf.Parser.BrainfParser.Parse(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Brainf.Parser.BrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
+        <member name="M:Brainf.Parser.BrainfParser.TryParse(System.String,Brainf.Program.IBrainfProgram@,System.String@)">
             <inheritdoc />
         </member>
         <member name="T:Brainf.Parser.IBrainfParser">
@@ -280,7 +148,7 @@
             <exception cref="T:Brainf.Exceptions.BrainfParseException">
                 The <paramref name="sourceCode"/> parameter contains syntax errors.
             </exception>
-            <seealso cref="M:Brainf.Parser.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)"/>
+            <seealso cref="M:Brainf.Parser.IBrainfParser.TryParse(System.String,Brainf.Program.IBrainfProgram@,System.String@)"/>
             <example>
             <code>
                 const string sourceCode = ...;
@@ -291,7 +159,7 @@
             </code>
             </example>
         </member>
-        <member name="M:Brainf.Parser.IBrainfParser.TryParse(System.String,Brainf.IBrainfProgram@,System.String@)">
+        <member name="M:Brainf.Parser.IBrainfParser.TryParse(System.String,Brainf.Program.IBrainfProgram@,System.String@)">
             <summary>
             Returns `Brainfuck` program from source code.
             A return value indicates whether the parsing operation succeeded.
@@ -313,6 +181,135 @@
                     Console.WriteLine($"Error! {errorMessage}");
                     return;
                 }
+            </code>
+            </example>
+        </member>
+        <member name="T:Brainf.Program.BrainfKind">
+            <summary>
+            `Brainfuck` operation kind.
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.MoveR">
+            <summary>
+            `&gt;` — increment the data pointer (to point to the next cell to the right).
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.MoveL">
+            <summary>
+            `&lt;` — decrement the data pointer (to point to the next cell to the left).
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.Inc">
+            <summary>
+            `+` — increment (increase by one) the byte at the data pointer.
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.Dec">
+            <summary>
+            `-` — decrement (decrease by one) the byte at the data pointer.
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.Out">
+            <summary>
+            `.` — output the byte at the data pointer.
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.In">
+            <summary>
+            `,` — accept one byte of input, storing its value in the byte at the data pointer.
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.LoopStart">
+            <summary>
+            `[` — if the byte at the data pointer is zero,
+                  then instead of moving the instruction pointer forward to the next command,
+                  jump it forward to the command after the matching ] command.
+            </summary>
+        </member>
+        <member name="F:Brainf.Program.BrainfKind.LoopEnd">
+            <summary>
+            `]` — if the byte at the data pointer is nonzero,
+                  then instead of moving the instruction pointer forward to the next command,
+                  jump it back to the command after the matching [ command.
+            </summary>
+        </member>
+        <member name="T:Brainf.Program.BrainfOperation">
+            <summary>
+            `Brainfuck` program operation.
+            </summary>
+        </member>
+        <member name="P:Brainf.Program.BrainfOperation.Kind">
+            <summary>
+            Gets the operation kind.
+            </summary>
+        </member>
+        <member name="P:Brainf.Program.BrainfOperation.Count">
+            <summary>
+            Gets the number of repetitions of the operation.
+            </summary>
+        </member>
+        <member name="M:Brainf.Program.BrainfOperation.#ctor(Brainf.Program.BrainfKind,System.Int32)">
+            <summary>
+            Initializes a new <see cref="T:Brainf.Program.BrainfOperation"/>.
+            </summary>
+            <param name="kind">Operation kind.</param>
+            <param name="count">Program operations.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+                The <paramref name="count"/> parameter is less than or equal to zero.
+            </exception>
+        </member>
+        <member name="T:Brainf.Program.BrainfProgram">
+            <summary>
+            `Brainfuck` program.
+            </summary>
+        </member>
+        <member name="P:Brainf.Program.BrainfProgram.SourceCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Brainf.Program.BrainfProgram.#ctor(System.String,System.Collections.Generic.IEnumerable{Brainf.Program.BrainfOperation})">
+            <summary>
+            Initializes a new <see cref="T:Brainf.Program.BrainfProgram"/>.
+            </summary>
+            <param name="sourceCode">The source code.</param>
+            <param name="operations">Program operations.</param>
+            <exception cref="T:System.ArgumentNullException">
+                The <paramref name="sourceCode"/> parameter is null.
+                The <paramref name="operations"/> parameter is null.
+            </exception>
+        </member>
+        <member name="M:Brainf.Program.BrainfProgram.GetOperations">
+            <inheritdoc />
+        </member>
+        <member name="T:Brainf.Program.IBrainfProgram">
+            <summary>
+            Interface used for implementing `Brainfuck` program.
+            </summary>
+        </member>
+        <member name="P:Brainf.Program.IBrainfProgram.SourceCode">
+            <summary>
+            Gets the source code.
+            </summary>
+        </member>
+        <member name="M:Brainf.Program.IBrainfProgram.GetOperations">
+            <summary>
+            Returns all program operations.
+            </summary>
+            <seealso cref="M:Brainf.Parser.IBrainfParser.Parse(System.String)"/>
+            <seealso cref="P:Brainf.Program.BrainfOperation.Kind"/>
+            <example>
+            <code>
+                const string sourceCode = ...;
+             
+                var parser = new BrainfParser();
+             
+                var program = parser.Parse(sourceCode);
+             
+                var operations = program.GetOperations();
+             
+                for (int i = 0; i &lt; operations.Length; i++)
+                {
+                    Console.WriteLine(operations[i].Kind);
+                } 
             </code>
             </example>
         </member>
