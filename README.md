@@ -17,16 +17,14 @@ const string sourceCode = @"
 ++++++++[>++++++++++[>++++++++++[>++++++++++[>+
 +++++++++[-]<-]<-]<-]<-]<-]<-]<-]";
 
-var parser = BrainfParser.Default;
-var compiler = BrainfCompiler.Default;
+var parser = new BrainfParser();
+var compiler = new BrainfCompiler();
+var memory = new BrainfMemory();
 
 var program = parser.Parse(sourceCode);
 var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
 
-var memory = new BrainfMemory();
-var stream = BrainfStreams.Console;
-
-func(memory, stream);
+func(memory, BrainfStreams.Console);
 ```
 
 *Output:*
