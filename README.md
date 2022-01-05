@@ -3,9 +3,9 @@
 Brainf
 ===
 
-Library for executing code written in the [**Brainfuck**](https://en.wikipedia.org/wiki/Brainfuck) programming language.
+Library for executing code written in the [**Brainf\*ck**](https://en.wikipedia.org/wiki/Brainfuck) programming language.
 
-Example
+Examples
 ---
 
 On platforms supporting netstandard 2.1+
@@ -22,27 +22,16 @@ var compiler = new BrainfCompiler();
 var memory = new BrainfMemory();
 
 var program = parser.Parse(sourceCode);
-var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
+var func = compiler.Compile(program);
 
-func(memory, BrainfStreams.Console);
+func(memory, BrainfIO.Console);
 ```
 
 *Output:*
 > ZYXWVUTSRQPONMLKJIHGFEDCBA
 
-Performance
----
+### [Brainf\*ck interpreter 👀](http://www.hevanet.com/cristofd/brainfuck/dbfi.b)
 
-Code execution the [example](#example) above:
-
-| Method |     Mean |   Error |  StdDev | Allocated |
-|------- |---------:|--------:|--------:|----------:|
-| Brainf | 591.2 ms | 1.26 ms | 1.18 ms |  20.88 KB |
-
-What is madness?
----
-
-[A brainfuck interpreter](http://www.hevanet.com/cristofd/brainfuck/dbfi.b) is madness:
 
 ```csharp
 const string sourceCode = @"
