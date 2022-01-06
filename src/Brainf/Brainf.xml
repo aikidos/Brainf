@@ -154,6 +154,39 @@
                 The <paramref name="capacityNegative"/> parameter is less than zero.
             </exception>
         </member>
+        <member name="T:Brainf.Memory.BrainfMemoryPointer">
+            <summary>
+            Type that is used to represent a <see cref="T:Brainf.Memory.BrainfMemory"/> pointer.
+            </summary>
+        </member>
+        <member name="P:Brainf.Memory.BrainfMemoryPointer.RelativeIndex">
+            <summary>
+            Relative memory index.
+            Always positive.
+            </summary>
+        </member>
+        <member name="P:Brainf.Memory.BrainfMemoryPointer.IsNegative">
+            <summary>
+            Indicates whether the negative index is used.
+            </summary>
+        </member>
+        <member name="P:Brainf.Memory.BrainfMemoryPointer.AbsoluteIndex">
+            <summary>
+            Absolute memory index.
+            Returns negative <see cref="P:Brainf.Memory.BrainfMemoryPointer.RelativeIndex"/> if the value of <see cref="P:Brainf.Memory.BrainfMemoryPointer.IsNegative"/> is `True`.
+            Otherwise, positive.
+            </summary>
+        </member>
+        <member name="M:Brainf.Memory.BrainfMemoryPointer.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            Initializes a new <see cref="T:Brainf.Memory.BrainfMemoryPointer"/>.
+            </summary>
+            <param name="relativeIndex">Relative memory index.</param>
+            <param name="isNegative">Indicates whether the negative index is used.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+                The <paramref name="relativeIndex"/> parameter is less than zero.
+            </exception>
+        </member>
         <member name="T:Brainf.Memory.IBrainfMemory">
             <summary>
             Interface used for implementing memory usage algorithm.

@@ -15,8 +15,8 @@ public sealed class BrainfMemoryTests
         // Act
         for (var i = 0; i < 10; i++)
         {
-            memory.CellValue = i;
             memory.Pointer = i;
+            memory.CellValue = i;
         }
 
         for (var i = 9; i >= 0; i--)
@@ -27,6 +27,8 @@ public sealed class BrainfMemoryTests
 
         // Assert
         Assert.Equal(45, sum);
+        Assert.Equal(0, memory.Pointer);
+        Assert.Equal(0, memory.CellValue);
     }
         
     [Fact]

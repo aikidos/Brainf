@@ -11,9 +11,8 @@ public sealed class BrainfMemory : IBrainfMemory
 
     private int[] _positive;
     private int[] _negative;
-    private int _pointer;
+    private BrainfMemoryPointer _pointer;
     private int _cellValue;
-    private bool _isPositive;
     private bool _needUpdateCell;
 
     /// <inheritdoc />
@@ -22,63 +21,25 @@ public sealed class BrainfMemory : IBrainfMemory
     /// <inheritdoc />
     public int Pointer
     {
-        get => _isPositive ? _pointer : -_pointer;
+        get => _pointer.AbsoluteIndex;
         set
         {
-            // Note!!
-            // Small duplication of the resizing arrays logic is used as optimization.
-            // `MethodImplOptions.AggressiveInlining` also affects performance, albeit slightly.
-
             var index = Math.Abs(value);
 
-            if (_pointer == index)
+            if (_pointer.RelativeIndex == index)
             {
                 return;
             }
 
             if (_needUpdateCell)
             {
-                if (_isPositive)
-                {
-                    int length;
-
-                    while (_pointer >= (length = _positive.Length))
-                    {
-                        Array.Resize(ref _positive, length == 0 ? DefaultCapacity : length * 2);
-                    }
-
-                    _positive[_pointer] = _cellValue;
-                }
-                else
-                {
-                    int length;
-
-                    while (_pointer >= (length = _negative.Length))
-                    {
-                        Array.Resize(ref _negative, length == 0 ? DefaultCapacity : length * 2);
-                    }
-
-                    _negative[_pointer] = _cellValue;
-                }
-
+                SaveCellValue(_pointer, _cellValue);
                 _needUpdateCell = false;
             }
 
-            _isPositive = value > 0;
-            _pointer = index;
+            _pointer = new BrainfMemoryPointer(index, value < 0);
 
-            if (_isPositive)
-            {
-                _cellValue = index < _positive.Length
-                    ? _positive[_pointer]
-                    : 0;
-            }
-            else
-            {
-                _cellValue = index < _negative.Length
-                    ? _negative[_pointer]
-                    : 0;
-            }
+            _cellValue = GetSavedCellValue(_pointer);
         }
     }
 
@@ -117,5 +78,41 @@ public sealed class BrainfMemory : IBrainfMemory
 
         _positive = new int[capacityPositive];
         _negative = new int[capacityNegative];
+    }
+
+    private void SaveCellValue(BrainfMemoryPointer pointer, int value)
+    {
+        ref var array = ref pointer.IsNegative
+            ? ref _negative
+            : ref _positive;
+
+        EnsureCapacity(ref array, pointer.RelativeIndex);
+
+        array[pointer.RelativeIndex] = value;
+    }
+
+    private static void EnsureCapacity(ref int[] array, int index)
+    {
+        var length = array.Length;
+
+        while (index >= length)
+        {
+            length = length == 0
+                ? DefaultCapacity
+                : length * 2;
+        }
+
+        Array.Resize(ref array, length);
+    }
+
+    private int GetSavedCellValue(BrainfMemoryPointer pointer)
+    {
+        var array = pointer.IsNegative
+            ? _negative
+            : _positive;
+
+        return pointer.RelativeIndex < array.Length
+            ? array[pointer.RelativeIndex]
+            : 0;
     }
 }
