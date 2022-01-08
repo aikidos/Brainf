@@ -45,13 +45,11 @@ public sealed class BrainfParser : IBrainfParser
         var count = 1;
         var openedLoops = 0;
 
-        var span = sourceCode.AsSpan();
-
-        for (var i = 0; i < span.Length; i++)
+        foreach (var ch in sourceCode)
         {
             BrainfKind? kind = null;
 
-            switch (span[i])
+            switch (ch)
             {
                 case '>':
                     kind = BrainfKind.MoveR;

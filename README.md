@@ -30,8 +30,59 @@ func(memory, BrainfIO.Console);
 *Output:*
 > ZYXWVUTSRQPONMLKJIHGFEDCBA
 
-### [Brainf\*ck interpreter 👀](http://www.hevanet.com/cristofd/brainfuck/dbfi.b)
+### [🔺Sierpiński triangle🔻](http://brainfuck.org/sierpinski.b)
 
+```csharp
+const string sourceCode = @"
+++++++++[>+>++++<<-]>++>>+<[-[>>+<<-]+>>]>+[
+    -<<<[
+        ->[+[-]+>++>>>-<<]<[<]>>++++++[<<+++++>>-]+<<++.[-]<<
+    ]>.>+[>>]>+
+]";
+
+...
+
+func(memory, BrainfIO.Console);
+```
+
+*Console:*
+```
+                               *
+                              * *
+                             *   *
+                            * * * *
+                           *       *
+                          * *     * *
+                         *   *   *   *
+                        * * * * * * * *
+                       *               *
+                      * *             * *
+                     *   *           *   *
+                    * * * *         * * * *
+                   *       *       *       *
+                  * *     * *     * *     * *
+                 *   *   *   *   *   *   *   *
+                * * * * * * * * * * * * * * * *
+               *                               *
+              * *                             * *
+             *   *                           *   *
+            * * * *                         * * * *
+           *       *                       *       *
+          * *     * *                     * *     * *
+         *   *   *   *                   *   *   *   *
+        * * * * * * * *                 * * * * * * * *
+       *               *               *               *
+      * *             * *             * *             * *
+     *   *           *   *           *   *           *   *
+    * * * *         * * * *         * * * *         * * * *
+   *       *       *       *       *       *       *       *
+  * *     * *     * *     * *     * *     * *     * *     * *
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+```
+
+### [⚙️Brainf\*ck interpreter⚙️](http://www.hevanet.com/cristofd/brainfuck/dbfi.b)
 
 ```csharp
 const string sourceCode = @"
@@ -46,7 +97,7 @@ const string sourceCode = @"
 
 Console.WriteLine(@"Input a `Brainfuck` program and its input, separated by an exclamation point:");
 
-func(memory, stream);
+func(memory, BrainfIO.Console);
 ```
 
 *Console:*
