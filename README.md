@@ -3,9 +3,9 @@
 Brainf
 ===
 
-Library for executing code written in the [**Brainfuck**](https://en.wikipedia.org/wiki/Brainfuck) programming language.
+Library for executing code written in the [**Brainf\*ck**](https://en.wikipedia.org/wiki/Brainfuck) programming language.
 
-Example
+Examples
 ---
 
 On platforms supporting netstandard 2.1+
@@ -17,34 +17,72 @@ const string sourceCode = @"
 ++++++++[>++++++++++[>++++++++++[>++++++++++[>+
 +++++++++[-]<-]<-]<-]<-]<-]<-]<-]";
 
-var parser = BrainfParser.Default;
-var compiler = BrainfCompiler.Default;
+var parser = new BrainfParser();
+var compiler = new BrainfCompiler();
+var memory = new BrainfMemory();
 
 var program = parser.Parse(sourceCode);
-var func = compiler.Compile<BrainfMemory, ConsoleBrainfStream>(program);
+var func = compiler.Compile(program);
 
-var memory = new BrainfMemory();
-var stream = BrainfStreams.Console;
-
-func(memory, stream);
+func(memory, BrainfIO.Console);
 ```
 
 *Output:*
 > ZYXWVUTSRQPONMLKJIHGFEDCBA
 
-Performance
----
+### [🔺Sierpiński triangle🔻](http://brainfuck.org/sierpinski.b)
 
-Code execution the [example](#example) above:
+```csharp
+const string sourceCode = @"
+++++++++[>+>++++<<-]>++>>+<[-[>>+<<-]+>>]>+[
+    -<<<[
+        ->[+[-]+>++>>>-<<]<[<]>>++++++[<<+++++>>-]+<<++.[-]<<
+    ]>.>+[>>]>+
+]";
 
-| Method |     Mean |   Error |  StdDev | Allocated |
-|------- |---------:|--------:|--------:|----------:|
-| Brainf | 591.2 ms | 1.26 ms | 1.18 ms |  20.88 KB |
+...
 
-What is madness?
----
+func(memory, BrainfIO.Console);
+```
 
-[A brainfuck interpreter](http://www.hevanet.com/cristofd/brainfuck/dbfi.b) is madness:
+*Console:*
+```
+                               *
+                              * *
+                             *   *
+                            * * * *
+                           *       *
+                          * *     * *
+                         *   *   *   *
+                        * * * * * * * *
+                       *               *
+                      * *             * *
+                     *   *           *   *
+                    * * * *         * * * *
+                   *       *       *       *
+                  * *     * *     * *     * *
+                 *   *   *   *   *   *   *   *
+                * * * * * * * * * * * * * * * *
+               *                               *
+              * *                             * *
+             *   *                           *   *
+            * * * *                         * * * *
+           *       *                       *       *
+          * *     * *                     * *     * *
+         *   *   *   *                   *   *   *   *
+        * * * * * * * *                 * * * * * * * *
+       *               *               *               *
+      * *             * *             * *             * *
+     *   *           *   *           *   *           *   *
+    * * * *         * * * *         * * * *         * * * *
+   *       *       *       *       *       *       *       *
+  * *     * *     * *     * *     * *     * *     * *     * *
+ *   *   *   *   *   *   *   *   *   *   *   *   *   *   *   *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+```
+
+### [⚙️Brainf\*ck interpreter⚙️](http://www.hevanet.com/cristofd/brainfuck/dbfi.b)
 
 ```csharp
 const string sourceCode = @"
@@ -59,7 +97,7 @@ const string sourceCode = @"
 
 Console.WriteLine(@"Input a `Brainfuck` program and its input, separated by an exclamation point:");
 
-func(memory, stream);
+func(memory, BrainfIO.Console);
 ```
 
 *Console:*

@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainf", "src\Brainf\Brainf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainf.Tests", "tests\Brainf.Tests\Brainf.Tests.csproj", "{8B0DA8B9-DEB5-43E0-9E64-C3F046A26934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainf.Benchmarks", "tests\Brainf.Benchmarks\Brainf.Benchmarks.csproj", "{CFBC9B31-ACFE-4C5B-A85C-EBB9232AA597}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{8B0DA8B9-DEB5-43E0-9E64-C3F046A26934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B0DA8B9-DEB5-43E0-9E64-C3F046A26934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B0DA8B9-DEB5-43E0-9E64-C3F046A26934}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFBC9B31-ACFE-4C5B-A85C-EBB9232AA597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFBC9B31-ACFE-4C5B-A85C-EBB9232AA597}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFBC9B31-ACFE-4C5B-A85C-EBB9232AA597}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFBC9B31-ACFE-4C5B-A85C-EBB9232AA597}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,7 +32,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6755B260-05F1-483F-9F9D-AD104BFCD301} = {2B06726B-CB75-4F02-A49A-7B7A09CAC2A9}
 		{8B0DA8B9-DEB5-43E0-9E64-C3F046A26934} = {9BF84C97-F307-4B24-991E-9339D6609E02}
-		{CFBC9B31-ACFE-4C5B-A85C-EBB9232AA597} = {9BF84C97-F307-4B24-991E-9339D6609E02}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E97ACC40-023B-4F87-86AF-758B76C26900}
